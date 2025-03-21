@@ -35,10 +35,12 @@ add_executable(${PROJECT_NAME}
     ${SRC_DIR}/main.cpp
     ${SRC_FILES}
     ${HEADER_FILES}
-        include/BackgroundImage.hpp
-        src/PhaseManager.cpp
+
         include/Catcher.h
         src/Catcher.cpp
+        src/Catcher.cpp
+        include/Fruit.h
+        src/Fruit.cpp
 )
 
 if(MSVC)

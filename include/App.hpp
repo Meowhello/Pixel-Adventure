@@ -3,6 +3,9 @@
 
 #include "pch.hpp" // IWYU pragma: export
 #include "Catcher.h"
+#include "Fruit.h"
+#include "Util/Renderer.hpp"
+
 
 class App {
 public:
@@ -26,6 +29,10 @@ private:
 
 private:
     State m_CurrentState = State::START;
+    Util::Renderer m_Root;
+    std::shared_ptr<Fruit> m_Fruit;
+    std::vector<std::shared_ptr<Fruit>> fruits; //存放很多水果
+
 };
 
 #endif
