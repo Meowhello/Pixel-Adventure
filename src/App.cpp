@@ -1,5 +1,7 @@
 #include "App.hpp"
+#include <iostream>
 
+#include "Catcher.h"
 #include "Util/Image.hpp"
 #include "Util/Input.hpp"
 #include "Util/Keycode.hpp"
@@ -13,7 +15,15 @@ void App::Start() {
 void App::Update() {
     
     //TODO: do your things here and delete this line <3
-    
+    catcher.show();
+
+    if(Util::Input::IsKeyPressed(Util::Keycode::LEFT)) {
+        catcher.moveLeft();
+    }
+    if(Util::Input::IsKeyPressed(Util::Keycode::RIGHT)) {
+        catcher.moveRight();
+    }
+
     /*
      * Do not touch the code below as they serve the purpose for
      * closing the window.

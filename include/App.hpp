@@ -2,6 +2,7 @@
 #define APP_HPP
 
 #include "pch.hpp" // IWYU pragma: export
+#include "Catcher.h"
 
 class App {
 public:
@@ -21,6 +22,7 @@ public:
 
 private:
     void ValidTask();
+    Catcher catcher;
 
 private:
     State m_CurrentState = State::START;
