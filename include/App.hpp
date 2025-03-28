@@ -5,7 +5,7 @@
 #include "Catcher.h"
 #include "Fruit.h"
 #include "Util/Renderer.hpp"
-
+#include "Background.h"
 
 class App {
 public:
@@ -25,13 +25,16 @@ public:
 
 private:
     void ValidTask();
-    Catcher catcher;
+    // Catcher catcher;
+
 
 private:
     State m_CurrentState = State::START;
     Util::Renderer m_Root;
     std::shared_ptr<Fruit> m_Fruit;
+    std::shared_ptr<Catcher> m_Catcher;
     std::vector<std::shared_ptr<Fruit>> fruits; //存放很多水果
+    std::shared_ptr<Background> m_Background;
 
 };
 

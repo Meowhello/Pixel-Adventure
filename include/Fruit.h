@@ -22,8 +22,8 @@ public:
     Fruit(FruitType type);
 
 private:
-    std::shared_ptr<Util::Image> fruitImages;
-    std::vector<std::string> fruitImage;
+    // std::shared_ptr<Util::Image> fruitImages;
+    // std::vector<std::string> fruitImage;
 
 };
 #endif //FRUIT_H
