@@ -41,6 +41,10 @@ add_executable(${PROJECT_NAME}
         src/Catcher.cpp
         include/Fruit.h
         src/Fruit.cpp
+        include/Scorenumber.h
+        src/Scorenumber.cpp
+        include/Scoreboard.h
+        src/Scoreboard.cpp
 )
 
 if(MSVC)

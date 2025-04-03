@@ -6,6 +6,8 @@
 #include "Catcher.h"
 #include "Util/Time.hpp"
 #include "Fruit.h"
+#include "Scoreboard.h"
+#include "Scorenumber.h"
 #include "Util/Image.hpp"
 #include "Util/Input.hpp"
 #include "Util/Keycode.hpp"
@@ -15,6 +17,9 @@ void App::Start() {
     LOG_TRACE("Start");
     // m_Fruit = std::make_shared<Fruit>(Fruit::FruitType::Apple);
     // m_Root.AddChild(m_Fruit);
+
+    //scoreboard test code
+    m_Root.AddChild(scoreboard);
 
     m_CurrentState = State::UPDATE;
 }
@@ -67,6 +72,12 @@ void App::Update() {
         }
     }
 
+    //scoreboard test code
+    scoreboard->AddScore(1);
+    scoreboard->UpdateScoreboard();
+    scoreboard->Show();
+
+    //character control logic
     catcher.show();
     if(Util::Input::IsKeyPressed(Util::Keycode::LEFT)) {
         catcher.moveLeft();

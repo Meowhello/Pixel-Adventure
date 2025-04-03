@@ -4,6 +4,8 @@
 #include "pch.hpp" // IWYU pragma: export
 #include "Catcher.h"
 #include "Fruit.h"
+#include "Scoreboard.h"
+#include "Scorenumber.h"
 #include "Util/Renderer.hpp"
 
 
@@ -27,12 +29,12 @@ private:
     void ValidTask();
     Catcher catcher;
 
-private:
     State m_CurrentState = State::START;
     Util::Renderer m_Root;
     std::shared_ptr<Fruit> m_Fruit;
     std::vector<std::shared_ptr<Fruit>> fruits; //存放很多水果
 
+    std::shared_ptr<Scoreboard> scoreboard = std::make_shared<Scoreboard>();
 };
 
 #endif

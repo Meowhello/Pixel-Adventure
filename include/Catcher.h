@@ -4,7 +4,6 @@
 
 #ifndef CATCHER_H
 #define CATCHER_H
-#include <string>
 #include "Core/Drawable.hpp"
 #include "Util/Image.hpp"
 
