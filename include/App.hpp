@@ -11,7 +11,6 @@
 #include "Util/Renderer.hpp"
 #include "Background.h"
 
-
 class App {
 public:
     enum class State {
@@ -33,7 +32,8 @@ public:
 
 private:
     void ValidTask();
-    Catcher catcher;
+    // Catcher catcher;
+
 
     State m_CurrentState = State::START;
     Util::Renderer m_Root;

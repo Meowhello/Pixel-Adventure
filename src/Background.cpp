@@ -1,7 +1,4 @@
 //
-// Created by nkuht on 2025/4/5.
-//
-//
 // Created by tfboy on 2025/3/28.
 //
 #include "Background.h"

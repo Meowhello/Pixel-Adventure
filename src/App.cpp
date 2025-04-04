@@ -31,14 +31,12 @@ void App::Start() {
     m_Root.AddChild(_backButton);
     _backButton->SetVisible(false);
 
-
     m_CurrentState = State::UPDATE;
 }
 
 void App::Update() {
     
     //TODO: do your things here and delete this line <3
-
 
     if(Util::Input::IsKeyPressed(Util::Keycode::LEFT)) {
         m_Catcher->moveLeft();
@@ -48,9 +46,10 @@ void App::Update() {
     }
 
     static auto lastDrop = Util::Time::GetElapsedTimeMs();
-    if(Util::Time::GetElapsedTimeMs() - lastDrop > 1000) {
+    LOG_DEBUG("{}", Util::Time::GetElapsedTimeMs());
+    if(Util::Time::GetElapsedTimeMs() - lastDrop > 1000) { //一秒一個水果
         lastDrop = Util::Time::GetElapsedTimeMs();
-        auto rand_num = rand()%6;
+        auto rand_num = rand()%6; //隨機水果
         switch (rand_num) {
             case 0:
                 fruits.push_back(std::make_shared<Fruit>(Fruit::FruitType::Apple));
@@ -73,7 +72,7 @@ void App::Update() {
         }
     }
 
-    for (const auto &fruit : fruits) {
+    for (const auto &fruit : fruits) { //水果++
         m_Root.AddChild(fruit);
     }
 
@@ -97,6 +96,11 @@ void App::Update() {
             fruits.erase(fruits.begin());
             combo=0;
         }
+        else if(position.y<-400) { //判斷水果落地
+            fruits[i]->SetVisible(false);
+            fruits.erase(fruits.begin());
+            combo=0;
+        }
     }
 
     //scoreboard test code
@@ -114,8 +118,12 @@ void App::Update() {
      */
     if (//Util::Input::IsKeyUp(Util::Keycode::ESCAPE) ||
         Util::Input::IfExit()) {
+        // bglevel=std::make_shared<Background>(Background::level::pause);
         m_CurrentState = State::END;
     }
+    // if(m_Level==level::pause) {
+    //
+    // }
     m_Root.Update();
 }
 
