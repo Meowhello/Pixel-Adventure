@@ -146,3 +146,4 @@ void App::SetPauseButton(bool state) {
     _retryButton->SetVisible(state);
     _backButton->SetVisible(state);
 }
+
