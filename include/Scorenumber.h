@@ -11,13 +11,13 @@
 class Scorenumber : public Util::GameObject  {
 public:
     Scorenumber();
-    ~Scorenumber();
+    ~Scorenumber() = default;
 
     void Show();
     void UpdateImage(int);
     void SetPosition(int, int);
 private:
-    std::shared_ptr<Util::Image> _scoreimage;
+    std::shared_ptr<Util::Image> _scoreImage;
     int _x, _y;
 };
 

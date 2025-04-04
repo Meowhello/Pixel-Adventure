@@ -12,9 +12,6 @@ Scoreboard::Scoreboard(){
     }
 }
 
-Scoreboard::~Scoreboard() {
-}
-
 
 void Scoreboard::Show() {
     for(int i = 0; i < 8; i++) {
@@ -36,3 +33,12 @@ void Scoreboard::UpdateScoreboard() {
         _scoreborad[i]->UpdateImage(_score[i]);
     }
 }
+
+void Scoreboard::SetVisible(bool visible) {
+    Util::GameObject::SetVisible(visible);
+
+    for (auto& digit : _scoreborad) {
+        digit->SetVisible(visible);
+    }
+}
+

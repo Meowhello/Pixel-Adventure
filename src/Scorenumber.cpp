@@ -5,20 +5,17 @@
 #include "Scorenumber.h"
 
 Scorenumber::Scorenumber(){
-    _scoreimage = std::make_shared<Util::Image>("../Resources/Image/game_sources/default-0.png");
-}
-
-Scorenumber::~Scorenumber() {
+    _scoreImage = std::make_shared<Util::Image>("../Resources/Image/game_sources/default-0.png");
 }
 
 //show this number image
 void Scorenumber::Show() {
-    m_Drawable = _scoreimage;
+    m_Drawable = _scoreImage;
     m_Transform.translation = {_x, _y};
 }
 
 void Scorenumber::UpdateImage(int number) {
-    _scoreimage = std::make_shared<Util::Image>("../Resources/Image/game_sources/default-" + std::to_string(number) + ".png");
+    _scoreImage = std::make_shared<Util::Image>("../Resources/Image/game_sources/default-" + std::to_string(number) + ".png");
 }
 
 void Scorenumber::SetPosition(int x, int y) {

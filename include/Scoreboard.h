@@ -9,11 +9,12 @@
 class Scoreboard: public Util::GameObject {
 public:
     Scoreboard();
-    ~Scoreboard();
+    ~Scoreboard() = default;
 
     void Show();
     void AddScore(int);
     void UpdateScoreboard();
+    void SetVisible(bool visible);
 private:
     std::vector<int> _score = std::vector<int>(8, 0);
     std::vector<std::shared_ptr<Scorenumber>> _scoreborad  = std::vector<std::shared_ptr<Scorenumber>>();

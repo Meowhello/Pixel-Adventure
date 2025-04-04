@@ -45,6 +45,11 @@ add_executable(${PROJECT_NAME}
         src/Scorenumber.cpp
         include/Scoreboard.h
         src/Scoreboard.cpp
+        src/Button.cpp
+        include/Button.h
+        include/ContinueButton.h
+        include/RetryButton.h
+        include/BackButton.h
 )
 
 if(MSVC)
