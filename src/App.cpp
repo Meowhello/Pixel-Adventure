@@ -110,15 +110,11 @@ void App::Update() {
 
 void App::Pasue() {
     glm::vec2 mouseposition = Util::Input::GetCursorPosition();
-    bool isMouseInContinueBottom = false;
+    bool isMouseInContinueBottom = _continueButton->IsButtonClick(mouseposition);
     _scoreboard->SetVisible(false);
-    _continueButton->SetVisible(true);
-    _retryButton->SetVisible(true);
-    _backButton->SetVisible(true);
-    if(Util::Input::IsKeyDown(Util::Keycode::ESCAPE)) {
-        _continueButton->SetVisible(false);
-        _retryButton->SetVisible(false);
-        _backButton->SetVisible(false);
+    SetPauseButton(true);
+    if(Util::Input::IsKeyDown(Util::Keycode::ESCAPE) || isMouseInContinueBottom) {
+        SetPauseButton(false);
         _scoreboard->SetVisible(true);
         m_CurrentState = State::UPDATE;
     }
@@ -132,4 +128,10 @@ void App::Pasue() {
 
 void App::End() { // NOLINT(this method will mutate members in the future)
     LOG_TRACE("End");
+}
+
+void App::SetPauseButton(bool state) {
+    _continueButton->SetVisible(state);
+    _retryButton->SetVisible(state);
+    _backButton->SetVisible(state);
 }

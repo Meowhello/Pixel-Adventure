@@ -9,7 +9,7 @@
 class RetryButton : public Button {
 public:
     RetryButton()
-        : Button("../Resources/Image/game_sources/pause-retry.png", 0, 0) {}
+        : Button("../Resources/Image/game_sources/pause-retry.png", 0, 0, 100, 380) {}
     ~RetryButton() = default;
 };
 

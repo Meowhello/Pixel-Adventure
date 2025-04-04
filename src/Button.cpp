@@ -3,6 +3,7 @@
 //
 
 #include "Button.h"
+#include "Util/Input.hpp"
 
 Button::Button(std::string filepath, int x, int y, int height, int width):_x(x), _y(y), _height(height), _width(width) {
     _buttonImage = std::make_shared<Util::Image>(filepath);
@@ -11,7 +12,9 @@ Button::Button(std::string filepath, int x, int y, int height, int width):_x(x),
 }
 
 bool Button::IsButtonClick(glm::vec2 positon) {
-    return positon.x > _x + (_width / 2) && positon.x < _x + (_width / 2) && positon.y > _y + (_height / 2) && positon.y < _y + (_height / 2);
+    if (!Util::Input::IsKeyDown(Util::Keycode::MOUSE_LB))
+        return false;
+    return positon.x > _x - (_width / 2) && positon.x < _x + (_width / 2) && positon.y > _y - (_height / 2) && positon.y < _y + (_height / 2);
 }
 
 

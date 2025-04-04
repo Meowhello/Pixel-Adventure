@@ -25,14 +25,11 @@ public:
     State GetCurrentState() const { return m_CurrentState; }
 
     void Start();
-
     void Update();
-
     void End(); // NOLINT(readability-convert-member-functions-to-static)
-
     void GameStart();
-
     void Pasue();
+    void SetPauseButton(bool);
 
 private:
     void ValidTask();
