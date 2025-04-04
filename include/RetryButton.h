@@ -1,0 +1,16 @@
+//
+// Created by x3052 on 2025/4/4.
+//
+
+#ifndef REPLAYBUTTON_H
+#define REPLAYBUTTON_H
+#include "Button.h"
+
+class RetryButton : public Button {
+public:
+    RetryButton()
+        : Button("../Resources/Image/game_sources/pause-retry.png", 0, 0, 100, 380) {}
+    ~RetryButton() = default;
+};
+
+#endif //REPLAYBUTTON_H

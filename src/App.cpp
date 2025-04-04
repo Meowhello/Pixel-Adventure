@@ -6,6 +6,8 @@
 #include "Catcher.h"
 #include "Util/Time.hpp"
 #include "Fruit.h"
+#include "Scoreboard.h"
+#include "Scorenumber.h"
 #include "Util/Image.hpp"
 #include "Util/Input.hpp"
 #include "Util/Keycode.hpp"
@@ -15,10 +17,24 @@ void App::Start() {
     LOG_TRACE("Start");
     // m_Fruit = std::make_shared<Fruit>(Fruit::FruitType::Apple);
     // m_Root.AddChild(m_Fruit);
+<<<<<<< HEAD
     m_Catcher = (std::make_shared<Catcher>());
     m_Root.AddChild(m_Catcher);//人物加入m_Root一起畫出來
     m_Background = (std::make_shared<Background>(Background::level::level_1));
     m_Root.AddChild(m_Background);//畫背景
+=======
+
+    //scoreboard test code
+    m_Root.AddChild(_scoreboard);
+    m_Root.AddChild(_continueButton);
+    _continueButton->SetVisible(false);
+    m_Root.AddChild(_retryButton);
+    _retryButton->SetVisible(false);
+    m_Root.AddChild(_backButton);
+    _backButton->SetVisible(false);
+
+
+>>>>>>> e76a373ea8e1b8eebbf39cc90fece632b90e913b
     m_CurrentState = State::UPDATE;
 }
 
@@ -38,8 +54,13 @@ void App::Update() {
     // std::vector<std::shared_ptr<Fruit>> fruits; //存放很多水果
     // for (int i = 0; i < 10; i++) {
     static auto lastDrop = Util::Time::GetElapsedTimeMs();
+<<<<<<< HEAD
     LOG_DEBUG("{}", Util::Time::GetElapsedTimeMs());
     if(Util::Time::GetElapsedTimeMs() - lastDrop > 1000) { //一秒一個水果
+=======
+    //LOG_DEBUG("{}", Util::Time::GetElapsedTimeMs());
+    if(Util::Time::GetElapsedTimeMs() - lastDrop > 1000) {
+>>>>>>> e76a373ea8e1b8eebbf39cc90fece632b90e913b
         lastDrop = Util::Time::GetElapsedTimeMs();
         auto rand_num = rand()%6; //隨機水果
         switch (rand_num) {
@@ -88,13 +109,34 @@ void App::Update() {
             fruits.erase(fruits.begin());
             combo=0;
         }
+<<<<<<< HEAD
+=======
+    }
+
+    //scoreboard test code
+    _scoreboard->UpdateScoreboard();
+    _scoreboard->Show();
+    _scoreboard->AddScore(1);
+
+    //character control logic
+    catcher.show();
+    if(Util::Input::IsKeyPressed(Util::Keycode::LEFT)) {
+        catcher.moveLeft();
+    }
+    if(Util::Input::IsKeyPressed(Util::Keycode::RIGHT)) {
+        catcher.moveRight();
+>>>>>>> e76a373ea8e1b8eebbf39cc90fece632b90e913b
+    }
+
+    if(Util::Input::IsKeyDown(Util::Keycode::ESCAPE)) {
+        m_CurrentState = State::PAUSE;
     }
 
     /*
      * Do not touch the code below as they serve the purpose for
      * closing the window.
      */
-    if (Util::Input::IsKeyUp(Util::Keycode::ESCAPE) ||
+    if (//Util::Input::IsKeyUp(Util::Keycode::ESCAPE) ||
         Util::Input::IfExit()) {
         // bglevel=std::make_shared<Background>(Background::level::pause);
         m_CurrentState = State::END;
@@ -105,6 +147,30 @@ void App::Update() {
     m_Root.Update();
 }
 
+void App::Pasue() {
+    glm::vec2 mouseposition = Util::Input::GetCursorPosition();
+    bool isMouseInContinueBottom = _continueButton->IsButtonClick(mouseposition);
+    _scoreboard->SetVisible(false);
+    SetPauseButton(true);
+    if(Util::Input::IsKeyDown(Util::Keycode::ESCAPE) || isMouseInContinueBottom) {
+        SetPauseButton(false);
+        _scoreboard->SetVisible(true);
+        m_CurrentState = State::UPDATE;
+    }
+
+    if (Util::Input::IfExit()) {
+        m_CurrentState = State::END;
+        }
+    m_Root.Update();
+}
+
+
 void App::End() { // NOLINT(this method will mutate members in the future)
     LOG_TRACE("End");
+}
+
+void App::SetPauseButton(bool state) {
+    _continueButton->SetVisible(state);
+    _retryButton->SetVisible(state);
+    _backButton->SetVisible(state);
 }
