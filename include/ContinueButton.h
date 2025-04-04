@@ -9,7 +9,9 @@
 class ContinueButton : public Button {
 public:
     ContinueButton()
-        : Button("../Resources/Image/game_sources/pause-continue.png", 0, 125, 100, 380) {}
+        : Button("../Resources/Image/game_sources/pause-continue.png", 0, 125, 100, 380) {
+        SetZIndex(5);
+    }
     ~ContinueButton() = default;
 };
 

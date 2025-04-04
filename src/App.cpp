@@ -17,6 +17,10 @@ void App::Start() {
     LOG_TRACE("Start");
     // m_Fruit = std::make_shared<Fruit>(Fruit::FruitType::Apple);
     // m_Root.AddChild(m_Fruit);
+    m_Catcher = (std::make_shared<Catcher>());
+    m_Root.AddChild(m_Catcher);//人物加入m_Root一起畫出來
+    m_Background = (std::make_shared<Background>(Background::level::level_1));
+    m_Root.AddChild(m_Background);//畫背景
 
     //scoreboard test code
     m_Root.AddChild(_scoreboard);
@@ -35,10 +39,15 @@ void App::Update() {
     
     //TODO: do your things here and delete this line <3
 
-    // std::vector<std::shared_ptr<Fruit>> fruits; //存放很多水果
-    // for (int i = 0; i < 10; i++) {
+
+    if(Util::Input::IsKeyPressed(Util::Keycode::LEFT)) {
+        m_Catcher->moveLeft();
+    }
+    if(Util::Input::IsKeyPressed(Util::Keycode::RIGHT)) {
+        m_Catcher->moveRight();
+    }
+
     static auto lastDrop = Util::Time::GetElapsedTimeMs();
-    //LOG_DEBUG("{}", Util::Time::GetElapsedTimeMs());
     if(Util::Time::GetElapsedTimeMs() - lastDrop > 1000) {
         lastDrop = Util::Time::GetElapsedTimeMs();
         auto rand_num = rand()%6;
@@ -68,14 +77,25 @@ void App::Update() {
         m_Root.AddChild(fruit);
     }
 
+    static auto combo=0;
     for (int i = 0; i < fruits.size(); i++) { //一起控制所有的水果
         auto position = fruits[i]->m_Transform.translation; //控制 x 和 y
-        // std::cout <<"("<<position.x << "," << position.y <<")"<< std::endl;
-        position.y -= 10 ;
+        auto catcherpos=m_Catcher->m_Transform.translation; //人物
+        position.y -= 10 ; // 水果下墜
         fruits[i]->m_Transform.translation.y = position.y;
-        if(position.y<-200) {
+        // std::cout<<"person: ("<<catcherpos.x<<" , "<<catcherpos.y<<")"<<std::endl
+        //         <<"fruit: ("<<position.x<<" , "<<position.y<<")"<<std::endl;
+
+        std::cout<<"combo: "<<combo<<std::endl;
+        if(abs(position.x-catcherpos.x)<100 && position.y<=-130&& position.y>-220) { //判斷水果觸碰
             fruits[i]->SetVisible(false);
             fruits.erase(fruits.begin());
+            combo++;
+        }
+        else if(position.y<-400) { //判斷水果落地
+            fruits[i]->SetVisible(false);
+            fruits.erase(fruits.begin());
+            combo=0;
         }
     }
 
@@ -83,15 +103,6 @@ void App::Update() {
     _scoreboard->UpdateScoreboard();
     _scoreboard->Show();
     _scoreboard->AddScore(1);
-
-    //character control logic
-    catcher.show();
-    if(Util::Input::IsKeyPressed(Util::Keycode::LEFT)) {
-        catcher.moveLeft();
-    }
-    if(Util::Input::IsKeyPressed(Util::Keycode::RIGHT)) {
-        catcher.moveRight();
-    }
 
     if(Util::Input::IsKeyDown(Util::Keycode::ESCAPE)) {
         m_CurrentState = State::PAUSE;

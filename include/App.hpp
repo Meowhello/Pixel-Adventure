@@ -8,8 +8,8 @@
 #include "Fruit.h"
 #include "RetryButton.h"
 #include "Scoreboard.h"
-#include "Scorenumber.h"
 #include "Util/Renderer.hpp"
+#include "Background.h"
 
 
 class App {
@@ -38,7 +38,9 @@ private:
     State m_CurrentState = State::START;
     Util::Renderer m_Root;
     std::shared_ptr<Fruit> m_Fruit;
+    std::shared_ptr<Catcher> m_Catcher;
     std::vector<std::shared_ptr<Fruit>> fruits; //存放很多水果
+    std::shared_ptr<Background> m_Background;
 
     std::shared_ptr<Scoreboard> _scoreboard = std::make_shared<Scoreboard>();
     std::shared_ptr<ContinueButton> _continueButton = std::make_shared<ContinueButton>();

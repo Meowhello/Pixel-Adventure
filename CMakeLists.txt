@@ -50,6 +50,8 @@ add_executable(${PROJECT_NAME}
         include/ContinueButton.h
         include/RetryButton.h
         include/BackButton.h
+        include/Background.h
+        src/Background.cpp
 )
 
 if(MSVC)
