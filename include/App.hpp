@@ -8,7 +8,6 @@
 #include "Fruit.h"
 #include "RetryButton.h"
 #include "Scoreboard.h"
-#include "Scorenumber.h"
 #include "Util/Renderer.hpp"
 #include "Background.h"
 

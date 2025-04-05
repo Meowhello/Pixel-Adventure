@@ -9,7 +9,7 @@
 #include "Util/Image.hpp"
 
 class Background : public Util::GameObject {
-    public:
+public:
     enum class level {
         level_1,
         pause,

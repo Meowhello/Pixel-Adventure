@@ -12,4 +12,5 @@ Background::Background(level change=level::level_1) {
         filepath = (RESOURCE_DIR "/Image/game_sources/pause_background.png");
     }
     m_Drawable = std::make_shared<Util::Image>(filepath);
+    m_ZIndex = -10;
 }

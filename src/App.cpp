@@ -17,10 +17,12 @@ void App::Start() {
     LOG_TRACE("Start");
     // m_Fruit = std::make_shared<Fruit>(Fruit::FruitType::Apple);
     // m_Root.AddChild(m_Fruit);
+
     m_Catcher = (std::make_shared<Catcher>());
     m_Root.AddChild(m_Catcher);//人物加入m_Root一起畫出來
     m_Background = (std::make_shared<Background>(Background::level::level_1));
     m_Root.AddChild(m_Background);//畫背景
+
 
     //scoreboard test code
     m_Root.AddChild(_scoreboard);
@@ -35,7 +37,7 @@ void App::Start() {
 }
 
 void App::Update() {
-
+    
     //TODO: do your things here and delete this line <3
 
     // m_Root.AddChild(m_Catcher); //人物加入m_Root一起畫出來
@@ -50,11 +52,13 @@ void App::Update() {
     // std::vector<std::shared_ptr<Fruit>> fruits; //存放很多水果
     // for (int i = 0; i < 10; i++) {
     static auto lastDrop = Util::Time::GetElapsedTimeMs();
+
     LOG_DEBUG("{}", Util::Time::GetElapsedTimeMs());
     if(Util::Time::GetElapsedTimeMs() - lastDrop > 1000) { //一秒一個水果
 
     //LOG_DEBUG("{}", Util::Time::GetElapsedTimeMs());
     if(Util::Time::GetElapsedTimeMs() - lastDrop > 1000) {
+
         lastDrop = Util::Time::GetElapsedTimeMs();
         auto rand_num = rand()%6; //隨機水果
         switch (rand_num) {
@@ -103,7 +107,6 @@ void App::Update() {
             fruits.erase(fruits.begin());
             combo=0;
         }
-
     }
 
     //scoreboard test code

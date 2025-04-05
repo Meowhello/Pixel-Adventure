@@ -9,7 +9,9 @@
 class BackButton: public Button {
 public:
     BackButton()
-        : Button("../Resources/Image/game_sources/pause-back.png", 0, -125, 100, 380) {}
+    : Button("../Resources/Image/game_sources/pause-back.png", 0, -125, 100, 380) {
+        SetZIndex(5);
+    }
     ~BackButton() = default;
 };
 
