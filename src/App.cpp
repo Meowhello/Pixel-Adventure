@@ -55,10 +55,6 @@ void App::Update() {
 
     LOG_DEBUG("{}", Util::Time::GetElapsedTimeMs());
     if(Util::Time::GetElapsedTimeMs() - lastDrop > 1000) { //一秒一個水果
-
-    //LOG_DEBUG("{}", Util::Time::GetElapsedTimeMs());
-    if(Util::Time::GetElapsedTimeMs() - lastDrop > 1000) {
-
         lastDrop = Util::Time::GetElapsedTimeMs();
         auto rand_num = rand()%6; //隨機水果
         switch (rand_num) {
@@ -115,12 +111,11 @@ void App::Update() {
     _scoreboard->AddScore(1);
 
     //character control logic
-    catcher.show();
     if(Util::Input::IsKeyPressed(Util::Keycode::LEFT)) {
-        catcher.moveLeft();
+        m_Catcher->moveLeft();
     }
     if(Util::Input::IsKeyPressed(Util::Keycode::RIGHT)) {
-        catcher.moveRight();
+        m_Catcher->moveRight();
     }
 
     if(Util::Input::IsKeyDown(Util::Keycode::ESCAPE)) {
