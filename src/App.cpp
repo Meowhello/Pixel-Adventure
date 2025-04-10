@@ -14,9 +14,12 @@
 
 void App::Start() {
     LOG_TRACE("Start");
+
     _bgm = std::make_shared<Util::BGM>("../Resources/music/Haruhikage - CRYCHIC.mp3");
     _bgm->Play();
     _sfx = std::make_shared<Util::SFX>("../Resources/music/normal-hitclap.wav");
+
+    m_Root.RemoveChild(m_Catcher);
 
     m_Catcher = (std::make_shared<Catcher>());
     m_Root.AddChild(m_Catcher);//人物加入m_Root一起畫出來
@@ -143,6 +146,12 @@ void App::Pasue() {
         SetPauseButton(false);
         _scoreboard->SetVisible(true);
         m_CurrentState = State::UPDATE;
+    }
+
+    if(_retryButton->IsButtonClick(mouseposition)) {
+        SetPauseButton(false);
+        _scoreboard->SetVisible(true);
+        m_CurrentState = State::START;
     }
 
     if (Util::Input::IfExit()) {
