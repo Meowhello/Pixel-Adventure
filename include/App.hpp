@@ -10,6 +10,7 @@
 #include "Scoreboard.h"
 #include "Util/Renderer.hpp"
 #include "Background.h"
+#include "Combo.h"
 
 class App {
 public:
@@ -32,8 +33,6 @@ public:
 
 private:
     void ValidTask();
-    // Catcher catcher;
-
 
     State m_CurrentState = State::START;
     Util::Renderer m_Root;
@@ -46,6 +45,7 @@ private:
     std::shared_ptr<ContinueButton> _continueButton = std::make_shared<ContinueButton>();
     std::shared_ptr<RetryButton> _retryButton = std::make_shared<RetryButton>();
     std::shared_ptr<BackButton> _backButton = std::make_shared<BackButton>();
+    std::shared_ptr<Combo> _combo = std::make_shared<Combo>();
 };
 
 #endif

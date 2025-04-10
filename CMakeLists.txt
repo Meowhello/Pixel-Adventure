@@ -43,8 +43,8 @@ add_executable(${PROJECT_NAME}
         src/Fruit.cpp
         include/Background.h
         src/Background.cpp
-        include/Scorenumber.h
-        src/Scorenumber.cpp
+        include/Number.h
+        src/Number.cpp
         include/Scoreboard.h
         src/Scoreboard.cpp
         src/Button.cpp
@@ -54,6 +54,8 @@ add_executable(${PROJECT_NAME}
         include/BackButton.h
         include/Background.h
         src/Background.cpp
+        include/Combo.h
+        src/Combo.cpp
 )
 
 if(MSVC)

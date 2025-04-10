@@ -7,7 +7,6 @@
 #include "Util/Time.hpp"
 #include "Fruit.h"
 #include "Scoreboard.h"
-#include "Scorenumber.h"
 #include "Util/Image.hpp"
 #include "Util/Input.hpp"
 #include "Util/Keycode.hpp"
@@ -26,6 +25,7 @@ void App::Start() {
 
     //scoreboard test code
     m_Root.AddChild(_scoreboard);
+    m_Root.AddChild(_combo);
     m_Root.AddChild(_continueButton);
     _continueButton->SetVisible(false);
     m_Root.AddChild(_retryButton);
@@ -89,19 +89,16 @@ void App::Update() {
         auto catcherpos=m_Catcher->m_Transform.translation; //人物
         position.y -= 10 ; // 水果下墜
         fruits[i]->m_Transform.translation.y = position.y;
-        // std::cout<<"person: ("<<catcherpos.x<<" , "<<catcherpos.y<<")"<<std::endl
-        //         <<"fruit: ("<<position.x<<" , "<<position.y<<")"<<std::endl;
-
         std::cout<<"combo: "<<combo<<std::endl;
         if(abs(position.x-catcherpos.x)<100 && position.y<=-130&& position.y>-220) { //判斷水果觸碰
             fruits[i]->SetVisible(false);
             fruits.erase(fruits.begin());
-            combo++;
+            _combo->AddCombo(1);
         }
         else if(position.y<-400) { //判斷水果落地
             fruits[i]->SetVisible(false);
             fruits.erase(fruits.begin());
-            combo=0;
+            _combo->ResetCombo();
         }
     }
 
@@ -109,6 +106,9 @@ void App::Update() {
     _scoreboard->UpdateScoreboard();
     _scoreboard->Show();
     _scoreboard->AddScore(1);
+
+    _combo->UpdateCombo();
+    _combo->Show();
 
     //character control logic
     if(Util::Input::IsKeyPressed(Util::Keycode::LEFT)) {
@@ -126,23 +126,17 @@ void App::Update() {
      * Do not touch the code below as they serve the purpose for
      * closing the window.
      */
-    if (//Util::Input::IsKeyUp(Util::Keycode::ESCAPE) ||
-        Util::Input::IfExit()) {
-        // bglevel=std::make_shared<Background>(Background::level::pause);
+    if (Util::Input::IfExit()) {
         m_CurrentState = State::END;
     }
-    // if(m_Level==level::pause) {
-    //
-    // }
     m_Root.Update();
 }
 
 void App::Pasue() {
     glm::vec2 mouseposition = Util::Input::GetCursorPosition();
-    bool isMouseInContinueBottom = _continueButton->IsButtonClick(mouseposition);
     _scoreboard->SetVisible(false);
     SetPauseButton(true);
-    if(Util::Input::IsKeyDown(Util::Keycode::ESCAPE) || isMouseInContinueBottom) {
+    if(Util::Input::IsKeyDown(Util::Keycode::ESCAPE) || _continueButton->IsButtonClick(mouseposition)) {
         SetPauseButton(false);
         _scoreboard->SetVisible(true);
         m_CurrentState = State::UPDATE;

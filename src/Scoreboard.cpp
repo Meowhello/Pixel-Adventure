@@ -5,7 +5,7 @@
 
 Scoreboard::Scoreboard(){
     for (int i = 0; i < 8; i++) {
-        auto number = std::make_shared<Scorenumber>();
+        auto number = std::make_shared<Number>();
         number->SetPosition(610 - 35 * i, 320);
         _scoreborad.push_back(number);
         AddChild(number);

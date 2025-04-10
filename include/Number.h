@@ -8,16 +8,16 @@
 #include "Util/Image.hpp"
 #include "Util/GameObject.hpp"
 
-class Scorenumber : public Util::GameObject  {
+class Number : public Util::GameObject  {
 public:
-    Scorenumber();
-    ~Scorenumber() = default;
+    Number();
+    ~Number() = default;
 
     void Show();
     void UpdateImage(int);
     void SetPosition(int, int);
 private:
-    std::shared_ptr<Util::Image> _scoreImage;
+    std::shared_ptr<Util::Image> _numberImage;
     int _x, _y;
 };
 

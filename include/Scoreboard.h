@@ -4,7 +4,7 @@
 
 #ifndef SCOREBORAD_H
 #define SCOREBORAD_H
-#include "Scorenumber.h"
+#include "Number.h"
 
 class Scoreboard: public Util::GameObject {
 public:
@@ -17,7 +17,7 @@ public:
     void SetVisible(bool visible);
 private:
     std::vector<int> _score = std::vector<int>(8, 0);
-    std::vector<std::shared_ptr<Scorenumber>> _scoreborad  = std::vector<std::shared_ptr<Scorenumber>>();
+    std::vector<std::shared_ptr<Number>> _scoreborad  = std::vector<std::shared_ptr<Number>>();
 };
 
 #endif //SCOREBORAD_H
