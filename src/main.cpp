@@ -5,13 +5,7 @@
 int main(int, char**) {
     auto context = Core::Context::GetInstance();
     App app;
-    // std::vector<std::shared_ptr<Fruit>> fruits;
-    //
-    // fruits.emplace_back(std::make_shared<Fruit>());
-    //
-    // for (const auto &fruit : fruits) {
-    //     auto position = fruit->m_Transform.translation;
-    // }
+
     while (!context->GetExit()) {
         switch (app.GetCurrentState()) {
             case App::State::START:

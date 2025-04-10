@@ -11,6 +11,7 @@
 #include "Util/Renderer.hpp"
 #include "Background.h"
 #include "Combo.h"
+#include "Util/BGM.hpp"
 
 class App {
 public:
@@ -33,6 +34,7 @@ public:
 
 private:
     void ValidTask();
+    std::shared_ptr<Util::BGM> _bgm;
 
     State m_CurrentState = State::START;
     Util::Renderer m_Root;

@@ -14,8 +14,8 @@
 
 void App::Start() {
     LOG_TRACE("Start");
-    // m_Fruit = std::make_shared<Fruit>(Fruit::FruitType::Apple);
-    // m_Root.AddChild(m_Fruit);
+    _bgm = std::make_shared<Util::BGM>("../Resources/music/Haruhikage - CRYCHIC.mp3");
+    _bgm->Play();
 
     m_Catcher = (std::make_shared<Catcher>());
     m_Root.AddChild(m_Catcher);//人物加入m_Root一起畫出來
@@ -134,6 +134,7 @@ void App::Update() {
 
 void App::Pasue() {
     glm::vec2 mouseposition = Util::Input::GetCursorPosition();
+    _bgm->Pause();
     _scoreboard->SetVisible(false);
     SetPauseButton(true);
     if(Util::Input::IsKeyDown(Util::Keycode::ESCAPE) || _continueButton->IsButtonClick(mouseposition)) {
