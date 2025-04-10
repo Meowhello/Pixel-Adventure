@@ -16,6 +16,7 @@ void App::Start() {
     LOG_TRACE("Start");
     _bgm = std::make_shared<Util::BGM>("../Resources/music/Haruhikage - CRYCHIC.mp3");
     _bgm->Play();
+    _sfx = std::make_shared<Util::SFX>("../Resources/music/normal-hitclap.wav");
 
     m_Catcher = (std::make_shared<Catcher>());
     m_Root.AddChild(m_Catcher);//人物加入m_Root一起畫出來
@@ -94,6 +95,7 @@ void App::Update() {
             fruits[i]->SetVisible(false);
             fruits.erase(fruits.begin());
             _combo->AddCombo(1);
+            _sfx->Play();
         }
         else if(position.y<-400) { //判斷水果落地
             fruits[i]->SetVisible(false);

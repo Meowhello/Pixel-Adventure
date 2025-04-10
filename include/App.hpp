@@ -12,6 +12,7 @@
 #include "Background.h"
 #include "Combo.h"
 #include "Util/BGM.hpp"
+#include "Util/SFX.hpp"
 
 class App {
 public:
@@ -35,6 +36,7 @@ public:
 private:
     void ValidTask();
     std::shared_ptr<Util::BGM> _bgm;
+    std::shared_ptr<Util::SFX> _sfx;
 
     State m_CurrentState = State::START;
     Util::Renderer m_Root;
