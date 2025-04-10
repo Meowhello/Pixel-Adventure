@@ -96,12 +96,14 @@ void App::Update() {
         std::cout<<"combo: "<<combo<<std::endl;
         if(abs(position.x-catcherpos.x)<100 && position.y<=-130&& position.y>-220) { //判斷水果觸碰
             fruits[i]->SetVisible(false);
+            m_Root.RemoveChild(fruits.front());
             fruits.erase(fruits.begin());
             _combo->AddCombo(1);
             _sfx->Play();
         }
         else if(position.y<-400) { //判斷水果落地
             fruits[i]->SetVisible(false);
+            m_Root.RemoveChild(fruits.front());
             fruits.erase(fruits.begin());
             _combo->ResetCombo();
         }
