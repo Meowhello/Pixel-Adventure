@@ -56,6 +56,7 @@ add_executable(${PROJECT_NAME}
         src/Background.cpp
         include/Combo.h
         src/Combo.cpp
+        include/Music.h
 )
 
 if(MSVC)

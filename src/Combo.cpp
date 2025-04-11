@@ -6,6 +6,8 @@
 //
 #include "Combo.h"
 
+#include <iostream>
+
 Combo::Combo(): _x(560), _y(-330){
     _comboImage = std::make_shared<Util::Image>("../Resources/Image/game_sources/default-combo.png");
     for (int i = 0; i < 3; i++) {
@@ -27,6 +29,7 @@ void Combo::Show() {
 }
 
 void Combo::AddCombo(int delta) {
+    // conum+=delta;
     int carry = delta;
     for (int i = 0; i < 3 && carry > 0; i++) {
         int sum = _combo[i] + carry;
@@ -36,6 +39,7 @@ void Combo::AddCombo(int delta) {
 }
 
 void Combo::ResetCombo() {
+    // conum=0;
     for (int i = 0; i < 3; i++) {
         _combo[i] = 0;
     }
@@ -55,3 +59,10 @@ void Combo::SetVisible(bool visible) {
     }
 }
 
+int Combo::GetCombo() {
+    conum=0;
+    for (int i = 0; i < 3; i++) {
+        conum+=_combo[i]*pow(10,i);
+    }
+    return conum;
+}

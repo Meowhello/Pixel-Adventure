@@ -15,6 +15,8 @@ public:
     void AddScore(int);
     void UpdateScoreboard();
     void SetVisible(bool visible);
+    void ResetScore();
+
 private:
     std::vector<int> _score = std::vector<int>(8, 0);
     std::vector<std::shared_ptr<Number>> _scoreborad  = std::vector<std::shared_ptr<Number>>();

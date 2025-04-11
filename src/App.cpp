@@ -58,7 +58,7 @@ void App::Update() {
     static auto lastDrop = Util::Time::GetElapsedTimeMs();
 
     LOG_DEBUG("{}", Util::Time::GetElapsedTimeMs());
-    if(Util::Time::GetElapsedTimeMs() - lastDrop > 1000) { //一秒一個水果
+    if(Util::Time::GetElapsedTimeMs() - lastDrop > 1818) { //?秒一個水果
         lastDrop = Util::Time::GetElapsedTimeMs();
         auto rand_num = rand()%6; //隨機水果
         switch (rand_num) {
@@ -93,12 +93,17 @@ void App::Update() {
         auto catcherpos=m_Catcher->m_Transform.translation; //人物
         position.y -= 10 ; // 水果下墜
         fruits[i]->m_Transform.translation.y = position.y;
-        std::cout<<"combo: "<<combo<<std::endl;
+        std::cout<<"combo: "<<_combo->GetCombo()<<std::endl;
+
         if(abs(position.x-catcherpos.x)<100 && position.y<=-130&& position.y>-220) { //判斷水果觸碰
+            _scoreboard->AddScore(100);
             fruits[i]->SetVisible(false);
-            m_Root.RemoveChild(fruits.front());
-            fruits.erase(fruits.begin());
+            m_Root.RemoveChild(fruits.front());//拿掉最陣列最前面(首先掉下的)水果
+            fruits.erase(fruits.begin());//拿掉最陣列最前面(首先掉下的)水果
             _combo->AddCombo(1);
+            if(_combo->GetCombo()/5>=1) {
+                _scoreboard->AddScore(53*(_combo->GetCombo()/5));
+            }
             _sfx->Play();
         }
         else if(position.y<-400) { //判斷水果落地
@@ -112,7 +117,6 @@ void App::Update() {
     //scoreboard test code
     _scoreboard->UpdateScoreboard();
     _scoreboard->Show();
-    _scoreboard->AddScore(1);
 
     _combo->UpdateCombo();
     _combo->Show();
@@ -152,6 +156,8 @@ void App::Pasue() {
 
     if(_retryButton->IsButtonClick(mouseposition)) {
         SetPauseButton(false);
+        _combo->ResetCombo();
+        _scoreboard->ResetScore();
         _scoreboard->SetVisible(true);
         m_CurrentState = State::START;
     }

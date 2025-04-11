@@ -42,3 +42,8 @@ void Scoreboard::SetVisible(bool visible) {
     }
 }
 
+void Scoreboard::ResetScore() {
+    for (int i = 0; i < 8; i++) {
+        _score[i] = 0;
+    }
+}
