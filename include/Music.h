@@ -12,6 +12,8 @@ class Music : public Util::BGM{
         Haruhikage_CRYCHIC,
     };
     void PickMusic(SongName name);
+
+    std::shared_ptr<Util::BGM> song;
 };
 
 #endif //MUSIC_H

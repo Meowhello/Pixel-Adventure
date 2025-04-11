@@ -11,4 +11,6 @@ void Music::PickMusic(SongName name) {
             filepath = (RESOURCE_DIR "/music/Haruhikage_CRYCHIC");
         break;
     }
+    song=std::make_shared<Util::BGM>(filepath);
+    song->Play();
 }
