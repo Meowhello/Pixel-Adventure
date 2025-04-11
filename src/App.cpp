@@ -16,7 +16,7 @@ void App::Start() {
     LOG_TRACE("Start");
 
     m_Root.RemoveChild(_level);
-    _level = std::make_shared<Level>("Haruhikage", Level::Difficulty::Easy, RESOURCE_DIR "music/Haruhikage - CRYCHIC.mp3", RESOURCE_DIR "music/normal-hitclap.wav", "");
+    _level = std::make_shared<Level>("Haruhikage", Level::Difficulty::Easy, "../Resources/music/Haruhikage_CRYCHIC.mp3", "../Resources/music/normal-hitclap.wav", "");
     m_Root.AddChild(_level);
 
     m_CurrentState = State::UPDATE;

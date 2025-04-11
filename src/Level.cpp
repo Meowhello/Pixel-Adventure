@@ -10,6 +10,7 @@
 
 Level::Level(std::string name, Difficulty difficulty ,std::string bgmPath, std::string sfxPath, std::string backgroundPath): _name(std::move(name)), _difficulty(difficulty) {
     _bgm = std::make_shared<Util::BGM>(bgmPath);
+    _bgm->Play();
     _sfx = std::make_shared<Util::SFX>(sfxPath);
 
     m_Catcher = (std::make_shared<Catcher>());
@@ -29,7 +30,6 @@ Level::Level(std::string name, Difficulty difficulty ,std::string bgmPath, std::
 }
 
 void Level::Update() {
-    _bgm->Play();
 
     if(Util::Input::IsKeyPressed(Util::Keycode::LEFT)) {
         m_Catcher->moveLeft();
@@ -97,7 +97,6 @@ void Level::Update() {
 
     _scoreboard->UpdateScoreboard();
     _scoreboard->Show();
-    _scoreboard->AddScore(1);
 
     _combo->UpdateCombo();
     _combo->Show();
