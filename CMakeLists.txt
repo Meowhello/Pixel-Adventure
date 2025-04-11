@@ -56,6 +56,10 @@ add_executable(${PROJECT_NAME}
         src/Background.cpp
         include/Combo.h
         src/Combo.cpp
+        include/LevelManager.h
+        src/LevelManager.cpp
+        include/Level.h
+        src/Level.cpp
         include/Music.h
         src/Music.cpp
 )

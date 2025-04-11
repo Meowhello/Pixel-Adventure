@@ -19,6 +19,14 @@ void Scoreboard::Show() {
     }
 }
 
+void Scoreboard::SetScore(int n) {
+    for (int i = 0; i < 8  && n >= 0; i++) {
+        _score[i] = n % 10;
+        n = n / 10;
+    }
+}
+
+
 void Scoreboard::AddScore(int delta) {
     int carry = delta;
     for (int i = 0; i < 8 && carry > 0; i++) {
@@ -35,8 +43,6 @@ void Scoreboard::UpdateScoreboard() {
 }
 
 void Scoreboard::SetVisible(bool visible) {
-    Util::GameObject::SetVisible(visible);
-
     for (auto& digit : _scoreborad) {
         digit->SetVisible(visible);
     }
