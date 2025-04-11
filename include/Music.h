@@ -8,7 +8,10 @@
 
 class Music : public Util::BGM{
     public:
-
+    enum class SongName {
+        Haruhikage_CRYCHIC,
+    };
+    void PickMusic(SongName name);
 };
 
 #endif //MUSIC_H
