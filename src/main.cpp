@@ -12,9 +12,13 @@ int main(int, char**) {
                 app.Start();
                 break;
 
-            case App::State::UPDATE:
-                app.Update();
+            case App::State::MENU_UPDATE:
+                app.MenuUpdate();
                 break;
+
+            case App::State::GAME_UPDATE:
+                app.GameUpdate();
+            break;
 
             case App::State::PAUSE:
                 app.Pasue();

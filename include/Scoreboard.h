@@ -12,6 +12,7 @@ public:
     ~Scoreboard() = default;
 
     void Show();
+    void SetScore(int);
     void AddScore(int);
     void UpdateScoreboard();
     void SetVisible(bool visible);

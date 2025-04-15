@@ -48,16 +48,24 @@ add_executable(${PROJECT_NAME}
         include/Scoreboard.h
         src/Scoreboard.cpp
         src/Button.cpp
-        include/Button.h
-        include/ContinueButton.h
-        include/RetryButton.h
-        include/BackButton.h
+        include/Button/Button.h
+        include/Button/ContinueButton.h
+        include/Button/RetryButton.h
+        include/Button/BackButton.h
         include/Background.h
         src/Background.cpp
         include/Combo.h
         src/Combo.cpp
+        include/LevelManager.h
+        src/LevelManager.cpp
+        include/Level.h
+        src/Level.cpp
         include/Music.h
         src/Music.cpp
+        include/MainMenu.h
+        src/MainMenu.cpp
+        include/Button/PlayButton.h
+        include/Button/ExitButton.h
 )
 
 if(MSVC)
