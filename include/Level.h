@@ -5,16 +5,16 @@
 #ifndef LEVEL_H
 #define LEVEL_H
 
-#include "BackButton.h"
 #include "pch.hpp" // IWYU pragma: export
 #include "Catcher.h"
-#include "ContinueButton.h"
 #include "Fruit.h"
-#include "RetryButton.h"
 #include "Scoreboard.h"
 #include "Util/Renderer.hpp"
 #include "Background.h"
 #include "Combo.h"
+#include "Button/ContinueButton.h"
+#include "Button/RetryButton.h"
+#include "Button/BackButton.h"
 #include "Util/BGM.hpp"
 #include "Util/SFX.hpp"
 

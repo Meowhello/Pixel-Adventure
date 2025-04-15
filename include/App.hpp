@@ -4,23 +4,24 @@
 #include "Util/Renderer.hpp"
 #include "Level.h"
 #include "LevelManager.h"
+#include "MainMenu.h"
 
 class App {
 public:
     enum class State {
         START,
-        UPDATE,
+        MENU_UPDATE,
+        GAME_UPDATE,
+        PAUSE,
         END,
-        GAMESTART,
-        PAUSE
     };
 
     State GetCurrentState() const { return m_CurrentState; }
 
     void Start();
-    void Update();
+    void MenuUpdate();
     void End(); // NOLINT(readability-convert-member-functions-to-static)
-    void GameStart();
+    void GameUpdate();
     void Pasue();
 
 private:
@@ -31,6 +32,8 @@ private:
     std::shared_ptr<Level> _level;
     std::shared_ptr<LevelManager> _levelManager;
     std::shared_ptr<Level> _currentLevel;
+
+    std::shared_ptr<MainMenu> _mainMenu;
 };
 
 #endif

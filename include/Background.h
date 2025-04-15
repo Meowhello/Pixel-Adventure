@@ -11,6 +11,7 @@
 class Background : public Util::GameObject {
 public:
     enum class level {
+        MainMenu,
         level_1,
         pause,
     };
