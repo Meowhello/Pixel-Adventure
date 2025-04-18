@@ -28,9 +28,11 @@ public:
     Level(std::string, Difficulty, std::string, std::string, std::string);
     ~Level() = default;
 
+    void Initial();
     void Update();
     int Pause();
     void End();
+    void ResumeBGM();
 private:
     void SetPauseButton(bool);
     std::string _name;

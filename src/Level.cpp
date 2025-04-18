@@ -10,16 +10,16 @@
 
 Level::Level(std::string name, Difficulty difficulty ,std::string bgmPath, std::string sfxPath, std::string backgroundPath): _name(std::move(name)), _difficulty(difficulty) {
     _bgm = std::make_shared<Util::BGM>(bgmPath);
-    _bgm->Play();
     _sfx = std::make_shared<Util::SFX>(sfxPath);
-
     m_Catcher = (std::make_shared<Catcher>());
-    AddChild(m_Catcher);
     m_Background = (std::make_shared<Background>(Background::level::level_1));
-    AddChild(m_Background);
+}
 
-    AddChild(_scoreboard);
-    _scoreboard->SetScore(0);
+void Level::Initial() {
+    _bgm->Play();
+    AddChild(m_Catcher);
+    AddChild(m_Background);
+    AddChild(_scoreboard);_scoreboard->SetScore(0);
     AddChild(_combo);
     AddChild(_continueButton);
     _continueButton->SetVisible(false);
@@ -134,4 +134,8 @@ void Level::SetPauseButton(bool state) {
     _continueButton->SetVisible(state);
     _retryButton->SetVisible(state);
     _backButton->SetVisible(state);
+}
+
+void Level::ResumeBGM() {
+    _bgm->Resume();
 }

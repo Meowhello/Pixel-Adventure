@@ -52,14 +52,13 @@ void App::SelectLevelUpdate() {
 void App::GameInitial() {
     m_Root.RemoveChild(_level);
     _level = std::make_shared<Level>("Haruhikage", Level::Difficulty::Easy, "../Resources/music/Haruhikage_CRYCHIC.mp3", "../Resources/music/normal-hitclap.wav", "");
+    _level->Initial();
     m_Root.AddChild(_level);
     m_CurrentState = State::GAME_UPDATE;
 }
 
 
 void App::GameUpdate() {
-    // m_Root.RemoveChild(_level);
-    // m_Root.AddChild(_level);
 
     _level->Update();
 
@@ -78,6 +77,7 @@ void App::GameUpdate() {
 void App::Pasue() {
     int signal = _level->Pause();
     if(Util::Input::IsKeyDown(Util::Keycode::ESCAPE) || signal == 1) {
+        _level->ResumeBGM();
         m_CurrentState = State::GAME_UPDATE;
     }
 
