@@ -15,7 +15,7 @@ Level::Level(std::string name, Difficulty difficulty ,std::string bgmPath, std::
 
     m_Catcher = (std::make_shared<Catcher>());
     AddChild(m_Catcher);
-    m_Background = (std::make_shared<Background>(Background::level::MainMenu));
+    m_Background = (std::make_shared<Background>(Background::level::level_1));
     AddChild(m_Background);
 
     AddChild(_scoreboard);

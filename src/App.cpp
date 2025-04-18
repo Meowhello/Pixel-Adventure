@@ -58,7 +58,7 @@ void App::GameUpdate() {
 void App::Pasue() {
     int signal = _level->Pause();
     if(Util::Input::IsKeyDown(Util::Keycode::ESCAPE) || signal == 1) {
-        m_CurrentState = State::MENU_UPDATE;
+        m_CurrentState = State::GAME_UPDATE;
     }
 
     if( signal == 2) {
