@@ -85,6 +85,10 @@ void App::Pasue() {
         m_CurrentState = State::GAME_INITIAL;
     }
 
+    if(signal == 3) {
+        m_CurrentState = State::MENU;
+    }
+
     if (Util::Input::IfExit()) {
         m_CurrentState = State::END;
         }
