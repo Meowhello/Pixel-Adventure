@@ -5,12 +5,15 @@
 #include "Level.h"
 #include "LevelManager.h"
 #include "MainMenu.h"
+#include "SelectLevel.h"
 
 class App {
 public:
     enum class State {
         START,
-        MENU_UPDATE,
+        MENU,
+        SELECT_LEVEL,
+        GAME_INITIAL,
         GAME_UPDATE,
         PAUSE,
         END,
@@ -20,9 +23,11 @@ public:
 
     void Start();
     void MenuUpdate();
-    void End(); // NOLINT(readability-convert-member-functions-to-static)
+    void SelectLevelUpdate();
+    void GameInitial();
     void GameUpdate();
     void Pasue();
+    void End(); // NOLINT(readability-convert-member-functions-to-static)
 
 private:
     void ValidTask();
@@ -34,6 +39,7 @@ private:
     std::shared_ptr<Level> _currentLevel;
 
     std::shared_ptr<MainMenu> _mainMenu;
+    std::shared_ptr<SelectLevel> _selectLevel;
 };
 
 #endif

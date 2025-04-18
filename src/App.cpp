@@ -11,10 +11,10 @@
 void App::Start() {
     LOG_TRACE("Start");
     _mainMenu = std::make_shared<MainMenu>();
+    _selectLevel = std::make_shared<SelectLevel>();
 
-    _level = std::make_shared<Level>("Haruhikage", Level::Difficulty::Easy, "../Resources/music/Haruhikage_CRYCHIC.mp3", "../Resources/music/normal-hitclap.wav", "");
 
-    m_CurrentState = State::MENU_UPDATE;
+    m_CurrentState = State::MENU;
 }
 
 void App::MenuUpdate() {
@@ -24,7 +24,8 @@ void App::MenuUpdate() {
 
     if( signal == 1) {
         m_Root.RemoveChild(_mainMenu);
-        m_CurrentState = State::GAME_UPDATE;
+        //m_Root.AddChild(_selectLevel);
+        m_CurrentState = State::GAME_INITIAL;
     }
 
     /*
@@ -37,9 +38,28 @@ void App::MenuUpdate() {
     m_Root.Update();
 }
 
-void App::GameUpdate() {
+void App::SelectLevelUpdate() {
+    _selectLevel->Updtate();
+
+    if (Util::Input::IfExit()) {
+        m_CurrentState = State::END;
+    }
+    m_Root.Update();
+    //m_CurrentState = State::GAME_INITIAL;
+}
+
+
+void App::GameInitial() {
     m_Root.RemoveChild(_level);
+    _level = std::make_shared<Level>("Haruhikage", Level::Difficulty::Easy, "../Resources/music/Haruhikage_CRYCHIC.mp3", "../Resources/music/normal-hitclap.wav", "");
     m_Root.AddChild(_level);
+    m_CurrentState = State::GAME_UPDATE;
+}
+
+
+void App::GameUpdate() {
+    // m_Root.RemoveChild(_level);
+    // m_Root.AddChild(_level);
 
     _level->Update();
 
@@ -58,11 +78,11 @@ void App::GameUpdate() {
 void App::Pasue() {
     int signal = _level->Pause();
     if(Util::Input::IsKeyDown(Util::Keycode::ESCAPE) || signal == 1) {
-        m_CurrentState = State::MENU_UPDATE;
+        m_CurrentState = State::GAME_UPDATE;
     }
 
     if( signal == 2) {
-        m_CurrentState = State::START;
+        m_CurrentState = State::GAME_INITIAL;
     }
 
     if (Util::Input::IfExit()) {

@@ -12,9 +12,17 @@ int main(int, char**) {
                 app.Start();
                 break;
 
-            case App::State::MENU_UPDATE:
+            case App::State::MENU:
                 app.MenuUpdate();
                 break;
+
+            case App::State::SELECT_LEVEL:
+                app.SelectLevelUpdate();
+            break;
+
+            case App::State::GAME_INITIAL:
+                app.GameInitial();
+            break;
 
             case App::State::GAME_UPDATE:
                 app.GameUpdate();

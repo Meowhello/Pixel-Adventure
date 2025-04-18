@@ -66,6 +66,10 @@ add_executable(${PROJECT_NAME}
         src/MainMenu.cpp
         include/Button/PlayButton.h
         include/Button/ExitButton.h
+        include/SelectLevel.h
+        src/SelectLevel.cpp
+        include/Button/LevelButton.h
+        src/LevelButton.cpp
 )
 
 if(MSVC)

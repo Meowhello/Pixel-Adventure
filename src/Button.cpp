@@ -5,16 +5,39 @@
 #include "Button/Button.h"
 #include "Util/Input.hpp"
 
-Button::Button(std::string filepath, int x, int y, int height, int width):_x(x), _y(y), _height(height), _width(width) {
+Button::Button(std::string filepath, int x, int y, int height, int width) {
     _buttonImage = std::make_shared<Util::Image>(filepath);
     m_Drawable = _buttonImage;
-    m_Transform.translation = {_x, _y};
+    m_Transform.translation = {x, y};
+    _size = {width, height};
 }
 
-bool Button::IsButtonClick(glm::vec2 positon) {
-    if (!Util::Input::IsKeyDown(Util::Keycode::MOUSE_LB))
-        return false;
-    return positon.x > _x - (_width / 2) && positon.x < _x + (_width / 2) && positon.y > _y - (_height / 2) && positon.y < _y + (_height / 2);
+glm::vec2 Button::getPosition() const {
+    return m_Transform.translation;
+}
+
+glm::vec2 Button::getSize() const {
+    return _size;
+}
+
+void Button::setPosition(const glm::vec2& pos) {
+    m_Transform.translation = pos;
+}
+
+void Button::setSize(const glm::vec2& size) {
+    _size = size;
+}
+
+
+bool Button::IsButtonClick(glm::vec2 position) {
+    if (!Util::Input::IsKeyDown(Util::Keycode::MOUSE_LB)) return false;
+
+    auto pos = m_Transform.translation;
+    auto size = _size;
+    return position.x > pos.x - size.x / 2 &&
+           position.x < pos.x + size.x / 2 &&
+           position.y > pos.y - size.y / 2 &&
+           position.y < pos.y + size.y / 2;
 }
 
 
