@@ -10,6 +10,7 @@ Background::Background(level change=level::level_1) {
     switch (change) {
         case level::MainMenu:
             filepath = (RESOURCE_DIR "/Image/main_page/main_background.png");
+            m_Transform.scale={0.67,0.67};
             break;
         case level::level_1:
             filepath = (RESOURCE_DIR "/Image/game_sources/background.jpg");
