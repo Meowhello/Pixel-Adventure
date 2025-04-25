@@ -4,6 +4,7 @@
 
 #ifndef LEVELMANAGER_H
 #define LEVELMANAGER_H
+#include "Background.h"
 #include "Level.h"
 #include "Util/GameObject.hpp"
 

@@ -27,6 +27,9 @@ void Catcher::moveLeft() {
         m_Transform.translation.x -= moveSpeed * 2;
     else
         m_Transform.translation.x -= moveSpeed;
+    if(m_Transform.translation.x<-500)
+        m_Transform.translation.x=-500;
+
 }
 
 void Catcher::moveRight() {
@@ -39,4 +42,6 @@ void Catcher::moveRight() {
         m_Transform.translation.x += moveSpeed * 2;
     else
         m_Transform.translation.x += moveSpeed;
+    if(m_Transform.translation.x>300)
+        m_Transform.translation.x=300;
 }
