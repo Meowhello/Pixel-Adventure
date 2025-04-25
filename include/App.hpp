@@ -31,6 +31,7 @@ public:
 
 private:
     void ValidTask();
+    std::shared_ptr<Level> level;
 
     State m_CurrentState = State::START;
     Util::Renderer m_Root;

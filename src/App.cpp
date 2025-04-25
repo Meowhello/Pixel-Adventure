@@ -13,25 +13,19 @@ void App::Start() {
     _mainMenu = std::make_shared<MainMenu>();
     _selectLevel = std::make_shared<SelectLevel>();
 
-
     m_CurrentState = State::MENU;
+    m_Root.AddChild(_mainMenu);
 }
 
 void App::MenuUpdate() {
-    //TODO: do your things here and delete this line <3
-    m_Root.AddChild(_mainMenu);
     int signal = _mainMenu->Update();
 
     if( signal == 1) {
         m_Root.RemoveChild(_mainMenu);
-        //m_Root.AddChild(_selectLevel);
-        m_CurrentState = State::GAME_INITIAL;
+        m_Root.AddChild(_selectLevel);
+        m_CurrentState = State::SELECT_LEVEL;
     }
 
-    /*
-     * Do not touch the code below as they serve the purpose for
-     * closing the window.
-     */
     if (Util::Input::IfExit() || signal == 2) {
         m_CurrentState = State::END;
     }
@@ -39,19 +33,22 @@ void App::MenuUpdate() {
 }
 
 void App::SelectLevelUpdate() {
-    _selectLevel->Updtate();
+    level = _selectLevel->Updtate();
+
+    if(level) {
+        _level = level;
+        m_Root.RemoveChild(_selectLevel);
+        m_CurrentState = State::GAME_INITIAL;
+    }
 
     if (Util::Input::IfExit()) {
         m_CurrentState = State::END;
     }
     m_Root.Update();
-    //m_CurrentState = State::GAME_INITIAL;
 }
 
 
 void App::GameInitial() {
-    m_Root.RemoveChild(_level);
-    _level = std::make_shared<Level>("Haruhikage", Level::Difficulty::Easy, "../Resources/music/Haruhikage_CRYCHIC.mp3", "../Resources/music/normal-hitclap.wav", "");
     _level->Initial();
     m_Root.AddChild(_level);
     m_CurrentState = State::GAME_UPDATE;
@@ -59,7 +56,6 @@ void App::GameInitial() {
 
 
 void App::GameUpdate() {
-
     _level->Update();
 
     if(Util::Input::IsKeyDown(Util::Keycode::ESCAPE)) {
@@ -82,12 +78,14 @@ void App::Pasue() {
     }
 
     if( signal == 2) {
+        _level = level;
         m_CurrentState = State::GAME_INITIAL;
     }
 
     if(signal == 3) {
         m_Root.RemoveChild(_level);
-        m_CurrentState = State::MENU;
+        m_Root.AddChild(_selectLevel);
+        m_CurrentState = State::SELECT_LEVEL;
     }
 
     if (Util::Input::IfExit()) {

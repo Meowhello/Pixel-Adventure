@@ -14,7 +14,7 @@ public:
     SelectLevel();
     ~SelectLevel() = default;
 
-    int Updtate();
+    std::shared_ptr<Level> Updtate();
 private:
     std::vector<std::shared_ptr<Level>> _levelVector;
     std::vector<std::shared_ptr<LevelButton>> _levelButtonVector;

@@ -18,11 +18,8 @@ public:
     void moveRight();
 
 private:
-    // glm::vec3 position;
-    // Util::Image myImage;
-    // Core::Matrices matrices;
     float moveSpeed;
-    // std::shared_ptr<Util::Image> catcherImage;
+    bool direction;
 };
 
 #endif //CATCHER_H

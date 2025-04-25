@@ -13,20 +13,30 @@ Level::Level(std::string name, Difficulty difficulty ,std::string bgmPath, std::
     _sfx = std::make_shared<Util::SFX>(sfxPath);
     m_Catcher = (std::make_shared<Catcher>());
     m_Background = (std::make_shared<Background>(Background::level::level_1));
+    _hp = std::make_shared<HP>();
+    _scoreboard = std::make_shared<Scoreboard>();
+    _combo = std::make_shared<Combo>();
+    _continueButton = std::make_shared<ContinueButton>();
+    _retryButton = std::make_shared<RetryButton>();
+    _backButton = std::make_shared<BackButton>();
 }
 
 void Level::Initial() {
     _bgm->Play();
+    _scoreboard->SetScore(0);
+    _continueButton->SetVisible(false);
+    _retryButton->SetVisible(false);
+    _backButton->SetVisible(false);
+
     AddChild(m_Catcher);
     AddChild(m_Background);
-    AddChild(_scoreboard);_scoreboard->SetScore(0);
+    AddChild(_hp);
+    AddChild(_scoreboard);
     AddChild(_combo);
     AddChild(_continueButton);
-    _continueButton->SetVisible(false);
     AddChild(_retryButton);
-    _retryButton->SetVisible(false);
     AddChild(_backButton);
-    _backButton->SetVisible(false);
+
 }
 
 void Level::Update() {
@@ -105,11 +115,9 @@ void Level::Update() {
 int Level::Pause() {
     glm::vec2 mouseposition = Util::Input::GetCursorPosition();
     _bgm->Pause();
-    _scoreboard->SetVisible(false);
     SetPauseButton(true);
     if(Util::Input::IsKeyDown(Util::Keycode::ESCAPE) || _continueButton->IsButtonClick(mouseposition)) {
         SetPauseButton(false);
-        _scoreboard->SetVisible(true);
         return 1;
     }
 
@@ -117,13 +125,11 @@ int Level::Pause() {
         SetPauseButton(false);
         _combo->ResetCombo();
         _scoreboard->ResetScore();
-        _scoreboard->SetVisible(true);
         return 2;
     }
 
     if(_backButton->IsButtonClick(mouseposition)) {
         SetPauseButton(false);
-        // m_Fruit
         return 3;
     }
 

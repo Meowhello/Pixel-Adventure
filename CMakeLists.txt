@@ -70,6 +70,8 @@ add_executable(${PROJECT_NAME}
         src/SelectLevel.cpp
         include/Button/LevelButton.h
         src/LevelButton.cpp
+        include/HP.h
+        src/HP.cpp
 )
 
 if(MSVC)

@@ -12,6 +12,7 @@
 #include "Util/Renderer.hpp"
 #include "Background.h"
 #include "Combo.h"
+#include "HP.h"
 #include "Button/ContinueButton.h"
 #include "Button/RetryButton.h"
 #include "Button/BackButton.h"
@@ -32,7 +33,11 @@ public:
     void Update();
     int Pause();
     void End();
+    void HandleInput();
+    void UpdateFruitSpawning();
+    void UpdateFruits();
     void ResumeBGM();
+    void ClearState();
 private:
     void SetPauseButton(bool);
     std::string _name;
@@ -42,15 +47,14 @@ private:
     std::shared_ptr<Util::SFX> _sfx;
 
     std::shared_ptr<Catcher> m_Catcher;
-    std::shared_ptr<Fruit> m_Fruit;
+    std::shared_ptr<HP> _hp;
     std::vector<std::shared_ptr<Fruit>> fruits;
     std::shared_ptr<Background> m_Background;
-
-    std::shared_ptr<Scoreboard> _scoreboard = std::make_shared<Scoreboard>();
-    std::shared_ptr<ContinueButton> _continueButton = std::make_shared<ContinueButton>();
-    std::shared_ptr<RetryButton> _retryButton = std::make_shared<RetryButton>();
-    std::shared_ptr<BackButton> _backButton = std::make_shared<BackButton>();
-    std::shared_ptr<Combo> _combo = std::make_shared<Combo>();
+    std::shared_ptr<Scoreboard> _scoreboard;
+    std::shared_ptr<Combo> _combo;
+    std::shared_ptr<ContinueButton> _continueButton;
+    std::shared_ptr<RetryButton> _retryButton;
+    std::shared_ptr<BackButton> _backButton;
 };
 
 #endif //LEVEL_H
