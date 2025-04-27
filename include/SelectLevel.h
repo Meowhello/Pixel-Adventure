@@ -18,6 +18,7 @@ public:
 private:
     std::vector<std::shared_ptr<Level>> _levelVector;
     std::vector<std::shared_ptr<LevelButton>> _levelButtonVector;
+    std::shared_ptr<Background> _background = std::make_shared<Background>(Background::level::MainMenu);
 };
 
 #endif //SELECTLEVEL_H

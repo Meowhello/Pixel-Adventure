@@ -8,7 +8,7 @@
 #include "Util/Input.hpp"
 
 SelectLevel::SelectLevel() {
-
+    AddChild(_background);
     for(int i = 0; i<30;i++) {
         auto levelButton = std::make_shared<LevelButton>("../Resources/Image/select_level/easy_open.png", 400 + i * 10, i * -100);
         _levelButtonVector.push_back(levelButton);

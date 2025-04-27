@@ -33,7 +33,7 @@ Fruit::Fruit(FruitType type){
         break;
     }
     m_Drawable = std::make_shared<Util::Image>(filepath);
-    auto randx=rand()%(801)-400;
+    auto randx=rand()%(801)-500;
     // std::cout << randx << std::endl;
     m_Transform.translation = {randx, 400}; //畫面頂部
     m_ZIndex=1;
