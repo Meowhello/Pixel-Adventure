@@ -22,7 +22,6 @@ public:
     int GetCombo();
 
 private:
-    std::shared_ptr<Util::Image> _comboImage;
     std::vector<int> _combo = std::vector<int>(3, 0);
     std::vector<std::shared_ptr<Number>> _comboborad  = std::vector<std::shared_ptr<Number>>();
     int _x, _y,conum;

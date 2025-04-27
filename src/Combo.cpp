@@ -9,20 +9,19 @@
 #include <iostream>
 
 Combo::Combo(): _x(560), _y(-330){
-    _comboImage = std::make_shared<Util::Image>("../Resources/Image/game_sources/default-combo.png");
     for (int i = 0; i < 3; i++) {
         auto number = std::make_shared<Number>();
         number->SetPosition(460 - 35 * i, -330);
         _comboborad.push_back(number);
         AddChild(number);
     }
+    m_Drawable = std::make_shared<Util::Image>("../Resources/Image/game_sources/default-combo.png");
+    m_Transform.translation = {_x, _y};
+    m_Transform.scale = {0.325, 0.5};
 }
 
 
 void Combo::Show() {
-    m_Drawable = _comboImage;
-    m_Transform.translation = {_x, _y};
-    m_Transform.scale = {0.325, 0.5};
     for(int i = 0; i < 3; i++) {
         _comboborad[i]->Show();
     }

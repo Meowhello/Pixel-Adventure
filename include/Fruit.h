@@ -21,9 +21,7 @@ public:
     };
     Fruit(FruitType type);
 
-private:
-    // std::shared_ptr<Util::Image> fruitImages;
-    // std::vector<std::string> fruitImage;
-
+    int64_t hitTime   = 0;
+    int64_t spawnTime = 0;
 };
 #endif //FRUIT_H

@@ -72,6 +72,8 @@ add_executable(${PROJECT_NAME}
         src/LevelButton.cpp
         include/HP.h
         src/HP.cpp
+        include/OsuParser.h
+        src/OsuParser.cpp
 )
 
 if(MSVC)

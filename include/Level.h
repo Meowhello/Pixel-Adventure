@@ -13,11 +13,13 @@
 #include "Background.h"
 #include "Combo.h"
 #include "HP.h"
+#include "OsuParser.h"
 #include "Button/ContinueButton.h"
 #include "Button/RetryButton.h"
 #include "Button/BackButton.h"
 #include "Util/BGM.hpp"
 #include "Util/SFX.hpp"
+#include "OsuParser.h"
 
 class Level: public Util::GameObject {
 public:
@@ -26,12 +28,12 @@ public:
         Middle,
         Hard
     };
-    Level(std::string, Difficulty, std::string, std::string, std::string);
+    Level(std::string, Difficulty, std::string, std::string, std::string, std::string);
     ~Level() = default;
 
     void Initial();
     void Update();
-    int Pause();
+    int  Pause();
     void End();
     void HandleInput();
     void UpdateFruitSpawning();
@@ -43,13 +45,26 @@ private:
     std::string _name;
     Difficulty _difficulty;
 
+    LevelData        _levelData;
+    int64_t          _startTimeMs   = 0;     // 真正開始計時的時刻（ = 實際 now + leadInMs）
+    int64_t          _runTimeMs     = 0;
+    std::size_t      _nextIndex     = 0;     // 下一顆水果 index
+    int              _approachMs    = 1200;  // 提前量 (可依 AR 動態計算)
+    int              _spawnStartY   = 360; // 螢幕最上方以外
+    float            _scaleX        = 1.f;   // 座標轉換
+    float            _scaleY        = 1.f;
+    int64_t          _leadInMs      = 2000;   // 準備時間，2秒
+    bool             _started       = false;   // 是否已經過了準備時間，開始正常掉水果
+
+
     std::shared_ptr<Util::BGM> _bgm;
     std::shared_ptr<Util::SFX> _sfx;
+    std::shared_ptr<OsuParser> _osuParser;
 
-    std::shared_ptr<Catcher> m_Catcher;
+    std::shared_ptr<Catcher> _catcher;
     std::shared_ptr<HP> _hp;
     std::vector<std::shared_ptr<Fruit>> fruits;
-    std::shared_ptr<Background> m_Background;
+    std::shared_ptr<Background> _background;
     std::shared_ptr<Scoreboard> _scoreboard;
     std::shared_ptr<Combo> _combo;
     std::shared_ptr<ContinueButton> _continueButton;
