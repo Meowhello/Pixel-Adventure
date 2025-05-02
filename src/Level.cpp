@@ -64,6 +64,7 @@ void Level::Initial() {
     // 假設 PTSD 設定：世界 X ∈ [-256,+256]、Y ∈ [-144,+144]
     _scaleX = 512.f / 512.f;  // → 若需要拉伸改這裡
     _scaleY = 288.f / 384.f;
+    _hp->restart();
 
     _bgm->Play();
     _scoreboard->SetScore(0);
@@ -116,6 +117,16 @@ int Level::Pause() {
 
     return 0;
 }
+
+void Level::Finish() {
+    _bgm->Resume();
+    _combo->SetVisible(false);
+    _scoreboard->SetVisible(false);
+    _hp->SetVisible(false);
+    _catcher->SetVisible(false);
+    m_Drawable = std::make_shared<Util::Image>((RESOURCE_DIR "/Image/game_sources/end_page.png"));
+}
+
 
 void Level::HandleInput() {
     if (Util::Input::IsKeyPressed(Util::Keycode::LEFT))
@@ -190,6 +201,7 @@ void Level::UpdateFruits() {
             RemoveChild(fruit);
             it = fruits.erase(it);
             _combo->ResetCombo();
+            _hp->hpdrain(10);
             continue;
         }
 

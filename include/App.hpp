@@ -27,6 +27,7 @@ public:
     void SelectLevelUpdate();
     void GameInitial();
     void GameUpdate();
+    void GameFinish();
     void Pasue();
     void End(); // NOLINT(readability-convert-member-functions-to-static)
 
@@ -42,6 +43,7 @@ private:
 
     std::shared_ptr<MainMenu> _mainMenu;
     std::shared_ptr<SelectLevel> _selectLevel;
+    std::shared_ptr<HP> _hp;
 };
 
 #endif

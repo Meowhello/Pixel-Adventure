@@ -12,7 +12,7 @@ void App::Start() {
     LOG_TRACE("Start");
     _mainMenu = std::make_shared<MainMenu>();
     _selectLevel = std::make_shared<SelectLevel>();
-
+    _hp = std::make_shared<HP>();
     m_CurrentState = State::MENU;
     m_Root.AddChild(_mainMenu);
 }
@@ -52,6 +52,7 @@ void App::GameInitial() {
     _level->Initial();
     m_Root.AddChild(_level);
     m_CurrentState = State::GAME_UPDATE;
+
 }
 
 
@@ -65,11 +66,16 @@ void App::GameUpdate() {
     if (Util::Input::IfExit()) {
         m_CurrentState = State::END;
     }
-    if (_level->GetMusicTime()<=Util::Time::GetElapsedTimeMs()-_level->GetStartTime()) {
-        // m_CurrentState = State::GAME;
+
+    if(_hp->Gethp()==0) {
+        m_CurrentState=State::FINISH;
     }
 
     m_Root.Update();
+}
+
+void App::GameFinish() {
+    _level->Finish();
 }
 
 

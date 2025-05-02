@@ -39,6 +39,7 @@ public:
     int GetStartTime();
     void Update();
     int  Pause();
+    void Finish();
     void End();
     void HandleInput();
     void UpdateFruitSpawning();

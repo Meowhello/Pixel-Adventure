@@ -11,6 +11,9 @@ class HP : public Util::GameObject{
 public:
     HP();
     ~HP() = default;
+    void hpdrain(int level);
+    void restart();
+    int Gethp();
 
     // std::shared_ptr<OsuParser> _osuParser;
 
