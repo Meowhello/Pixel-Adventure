@@ -14,7 +14,7 @@ SelectLevel::SelectLevel() {
         _levelButtonVector.push_back(levelButton);
         AddChild(levelButton);
     }
-    auto level = std::make_shared<Level>("Haruhikage", Level::Difficulty::Easy, "../Resources/music/Haruhikage_CRYCHIC.mp3", "../Resources/music/normal-hitclap.wav", "", "");
+    auto level = std::make_shared<Level>("Haruhikage", Level::Difficulty::Easy, "../Resources/music/Haruhikage_CRYCHIC.mp3", "../Resources/music/normal-hitclap.wav", "", "../Resources/music/CRYCHIC - Haruhikage (TV Size) (lkx_Shore) [Normal].osu");
     for(int i = 0; i<30;i++) {
         _levelVector.push_back(level);
     }

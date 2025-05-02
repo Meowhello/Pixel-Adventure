@@ -9,7 +9,7 @@
 #include "Util/Input.hpp"
 #include "Util/Time.hpp"
 
-Level::Level(std::string name, Difficulty difficulty ,std::string bgmPath, std::string sfxPath, std::string backgroundPath, std::string comfigPath): _name(std::move(name)), _difficulty(difficulty) {
+Level::Level(std::string name, Difficulty difficulty ,std::string bgmPath, std::string sfxPath, std::string backgroundPath, std::string comfigPath): _name(std::move(name)), _difficulty(difficulty),_comfigPath(comfigPath) {
     _bgm = std::make_shared<Util::BGM>(bgmPath);
     _sfx = std::make_shared<Util::SFX>(sfxPath);
     _osuParser = std::make_shared<OsuParser>();
@@ -24,7 +24,7 @@ Level::Level(std::string name, Difficulty difficulty ,std::string bgmPath, std::
 }
 
 void Level::Initial() {
-    OsuParser::ParseFile("../Resources/music/CRYCHIC - Haruhikage (TV Size) (lkx_Shore) [Normal].osu", _levelData);
+    OsuParser::ParseFile(_comfigPath, _levelData);
     _approachMs = _levelData.approachMs;
     // std::cout << "=== LevelData dump ===\n"
     //          << "object count: " << _levelData.objects.size() << "\n\n";
@@ -39,33 +39,13 @@ void Level::Initial() {
     std::sort(_levelData.objects.begin(), _levelData.objects.end(),
               [](auto& a, auto& b){ return a.hitTime < b.hitTime; });
 
-    // 3. 計算真正開始的 timestamp
     int64_t now = Util::Time::GetElapsedTimeMs();
-    _startTimeMs = now + _leadInMs;
+    _startTimeMs = now + _approachMs;
 
-    // 4. 預載在準備時間內就要進場的水果
-    //    也就是 spawnTime < 0 的那些
-    for (; _nextIndex < _levelData.objects.size(); ++_nextIndex) {
-        auto& o = _levelData.objects[_nextIndex];
-        int64_t spawnTime = o.hitTime - _approachMs;
-        if (spawnTime >= 0) break;  // 後面的都到準備時間後才處理
-        // 立刻生成，但「spawnTime」仍保留負值
-        auto fruit = std::make_shared<Fruit>(Fruit::FruitType::Apple);
-        int worldX = o.x - 256;
-        fruit->m_Transform.translation = { worldX, _spawnStartY };
-        fruit->spawnTime = spawnTime;
-        fruit->hitTime   = o.hitTime;
-        fruits.push_back(fruit);
-        AddChild(fruit);
-    }
-
-    // 5. 其它初始化（BGM、UI、加入 Catcher/背景等）
-    _started = false;
     // 假設 PTSD 設定：世界 X ∈ [-256,+256]、Y ∈ [-144,+144]
     _scaleX = 512.f / 512.f;  // → 若需要拉伸改這裡
     _scaleY = 288.f / 384.f;
 
-    _bgm->Play();
     _scoreboard->SetScore(0);
     _continueButton->SetVisible(false);
     _retryButton->SetVisible(false);
@@ -83,6 +63,12 @@ void Level::Initial() {
 }
 
 void Level::Update() {
+    if(!_isBgmPlay)
+        if(Util::Time::GetElapsedTimeMs() >= _startTimeMs) {
+            //std::cout<<_startTimeMs<<std::endl<<Util::Time::GetElapsedTimeMs()<<"ms"<< std::endl;
+            _bgm->Play();
+            _isBgmPlay = true;
+        }
     HandleInput();
     UpdateFruitSpawning();
     UpdateFruits();
