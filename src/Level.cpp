@@ -24,14 +24,7 @@ Level::Level(std::string name, Difficulty difficulty ,std::string bgmPath, std::
 }
 
 void Level::Initial() {
-    auto music=Music::Haruhikage;
-    switch (music) {
-        case Music::Haruhikage:
-            OsuParser::ParseFile("../Resources/music/CRYCHIC - Haruhikage (TV Size) (lkx_Shore) [Normal].osu", _levelData);
-            music_time=115000;
-        break;
-    }
-
+    OsuParser::ParseFile("../Resources/music/CRYCHIC - Haruhikage (TV Size) (lkx_Shore) [Normal].osu", _levelData);
     _approachMs = _levelData.approachMs;
     // std::cout << "=== LevelData dump ===\n"
     //          << "object count: " << _levelData.objects.size() << "\n\n";
@@ -46,12 +39,11 @@ void Level::Initial() {
     std::sort(_levelData.objects.begin(), _levelData.objects.end(),
               [](auto& a, auto& b){ return a.hitTime < b.hitTime; });
 
-    // 計算真正開始的 timestamp
+    // 3. 計算真正開始的 timestamp
     int64_t now = Util::Time::GetElapsedTimeMs();
     _startTimeMs = now + _leadInMs;
-    start_time=_startTimeMs;
 
-    // 預載在準備時間內就要進場的水果
+    // 4. 預載在準備時間內就要進場的水果
     //    也就是 spawnTime < 0 的那些
     for (; _nextIndex < _levelData.objects.size(); ++_nextIndex) {
         auto& o = _levelData.objects[_nextIndex];
@@ -67,7 +59,7 @@ void Level::Initial() {
         AddChild(fruit);
     }
 
-    // BGM、UI、加入 Catcher/背景等
+    // 5. 其它初始化（BGM、UI、加入 Catcher/背景等）
     _started = false;
     // 假設 PTSD 設定：世界 X ∈ [-256,+256]、Y ∈ [-144,+144]
     _scaleX = 512.f / 512.f;  // → 若需要拉伸改這裡
@@ -89,14 +81,6 @@ void Level::Initial() {
     AddChild(_backButton);
 
 }
-
-int Level::GetMusicTime() {
-    return music_time;
-}
-int Level::GetStartTime() {
-    return start_time;
-}
-
 
 void Level::Update() {
     HandleInput();
@@ -182,7 +166,7 @@ void Level::UpdateFruits() {
 
         fruit->m_Transform.translation.y -= 10;//= (_spawnStartY + 130.f) / _approachMs * (_runTimeMs / (fruit->hitTime - fruit->spawnTime));
 
-        // 判定區間
+        // 判定區間 (依你原本邏輯調整)
         auto pos     = fruit->m_Transform.translation;
         auto catcher = _catcher->m_Transform.translation;
 
