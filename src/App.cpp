@@ -33,10 +33,9 @@ void App::MenuUpdate() {
 }
 
 void App::SelectLevelUpdate() {
-    level = _selectLevel->Updtate();
+    _level = _selectLevel->Updtate();
 
-    if(level) {
-        _level = level;
+    if(_level) {
         m_Root.RemoveChild(_selectLevel);
         m_CurrentState = State::GAME_INITIAL;
     }
@@ -52,7 +51,6 @@ void App::GameInitial() {
     _level->Initial();
     m_Root.AddChild(_level);
     m_CurrentState = State::GAME_UPDATE;
-
 }
 
 
@@ -87,7 +85,8 @@ void App::Pasue() {
     }
 
     if( signal == 2) {
-        _level = level;
+        m_Root.RemoveChild(_level);
+        _level->ClearState();
         m_CurrentState = State::GAME_INITIAL;
     }
 

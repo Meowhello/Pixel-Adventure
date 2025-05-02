@@ -13,7 +13,6 @@ public:
     LevelButton(std::string imagePath, int, int);
     ~LevelButton() = default;
 
-    void MoveVertically(int step);
     void MoveUp();
     void MoveDown();
 };
