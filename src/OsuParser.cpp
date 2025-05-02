@@ -56,6 +56,10 @@ bool OsuParser::ParseFile(const std::string &path, LevelData &out){
                 if(ar<= 5) out.approachMs=int(1800-120*ar);
                 else out.approachMs=int(1200-150*(ar-5));
             }
+            if(auto p=line.find("HPDrainRate:");p!=std::string::npos) {
+                double hpd = toD(trim(line.substr(p + 13)));
+                out.diff = hpd;
+            }
         }
         // ───────── TimingPoints 收集 ───────────────────
         else if(cur==Sec::Timing){

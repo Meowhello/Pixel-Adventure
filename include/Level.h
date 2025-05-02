@@ -59,6 +59,8 @@ private:
     int              _spawnStartY   = 360; // 螢幕最上方以外
     float            _scaleX        = 1.f;   // 座標轉換
     float            _scaleY        = 1.f;
+    int64_t          _leadInMs      = 2000;   // 準備時間，2秒
+    bool             _started       = false;   // 是否已經過了準備時間，開始正常掉水果
     bool             _isBgmPlay     = false;
 
     int music_time=0;

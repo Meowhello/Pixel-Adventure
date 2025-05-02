@@ -17,6 +17,7 @@ struct HitObject {
 /// 關卡原始資料，供 Level 使用
 struct LevelData {
     std::vector<HitObject> objects;  //!< 已依 hitTime 升冪排序
+    int diff;
     int approachMs = 1200;           //!< 水果提前出現時間（依 AR 計算）
 };
 

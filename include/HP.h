@@ -5,11 +5,14 @@
 #ifndef HP_H
 #define HP_H
 #include "Util/GameObject.hpp"
+#include "OsuParser.h"
 
 class HP : public Util::GameObject{
 public:
     HP();
     ~HP() = default;
+
+    // std::shared_ptr<OsuParser> _osuParser;
 
 private:
 
