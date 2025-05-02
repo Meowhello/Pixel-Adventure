@@ -25,13 +25,18 @@ class Level: public Util::GameObject {
 public:
     enum class Difficulty {
         Easy,
-        Middle,
+        Normal,
         Hard
+    };
+    enum class Music {
+        Haruhikage
     };
     Level(std::string, Difficulty, std::string, std::string, std::string, std::string);
     ~Level() = default;
 
     void Initial();
+    int GetMusicTime();
+    int GetStartTime();
     void Update();
     int  Pause();
     void End();
@@ -55,6 +60,9 @@ private:
     float            _scaleY        = 1.f;
     int64_t          _leadInMs      = 2000;   // 準備時間，2秒
     bool             _started       = false;   // 是否已經過了準備時間，開始正常掉水果
+
+    int music_time=0;
+    int start_time;
 
 
     std::shared_ptr<Util::BGM> _bgm;

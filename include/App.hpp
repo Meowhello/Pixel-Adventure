@@ -15,6 +15,7 @@ public:
         SELECT_LEVEL,
         GAME_INITIAL,
         GAME_UPDATE,
+        FINISH,
         PAUSE,
         END,
     };

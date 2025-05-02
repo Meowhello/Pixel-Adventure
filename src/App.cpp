@@ -65,6 +65,9 @@ void App::GameUpdate() {
     if (Util::Input::IfExit()) {
         m_CurrentState = State::END;
     }
+    if (_level->GetMusicTime()<=Util::Time::GetElapsedTimeMs()-_level->GetStartTime()) {
+        // m_CurrentState = State::GAME;
+    }
 
     m_Root.Update();
 }
