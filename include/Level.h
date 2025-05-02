@@ -28,6 +28,7 @@ public:
         Normal,
         Hard
     };
+    Level(std::string, Difficulty, const std::string&, const std::string&, const std::string&, std::string );
     enum class Music {
         Haruhikage
     };
@@ -52,16 +53,16 @@ private:
     std::string _comfigPath;
 
     LevelData        _levelData;
-    int64_t          _startTimeMs   = 0;     // 真正開始計時的時刻（ = 實際 now + leadInMs）
-    int64_t          _runTimeMs     = 0;
-    std::size_t      _nextIndex     = 0;     // 下一顆水果 index
-    int              _approachMs    = 1200;  // 提前量 (可依 AR 動態計算)
-    int              _spawnStartY   = 360; // 螢幕最上方以外
-    float            _scaleX        = 1.f;   // 座標轉換
-    float            _scaleY        = 1.f;
-    int64_t          _leadInMs      = 2000;   // 準備時間，2秒
-    bool             _started       = false;   // 是否已經過了準備時間，開始正常掉水果
-    bool             _isBgmPlay     = false;
+    float          _startTimeMs       = 0;
+    float          _runTimeMs         = 0;
+    float          _pauseStartTimeMs  = 0;
+    float          _totalPauseTimeMs  = 0;
+    std::size_t      _nextIndex       = 0;     // 下一顆水果 index
+    int              _approachMs      = 1800;  // 提前量 (可依 AR 動態計算)
+    int              _spawnStartY     = 360; // 螢幕最上方以外
+    float            _scaleX          = 1.f;   // 座標轉換
+    float            _scaleY          = 1.f;
+    bool             _isBgmPlay       = false;
 
     int music_time=0;
     int start_time;

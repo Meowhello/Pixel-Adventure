@@ -16,8 +16,13 @@ public:
 
     std::shared_ptr<Level> Updtate();
 private:
-    std::vector<std::shared_ptr<Level>> _levelVector;
-    std::vector<std::shared_ptr<LevelButton>> _levelButtonVector;
+    struct LevelConfig {
+        std::string name;
+        Level::Difficulty diff;
+        std::string bgmPath, sfxPath, bgPath, osuPath, btnPath;
+    };
+    std::vector<LevelConfig> _configs;
+    std::vector<std::shared_ptr<LevelButton>> _buttons;
     std::shared_ptr<Background> _background = std::make_shared<Background>(Background::level::MainMenu);
 };
 

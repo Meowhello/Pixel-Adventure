@@ -9,22 +9,25 @@
 #include "Util/Input.hpp"
 #include "Util/Time.hpp"
 
-Level::Level(std::string name, Difficulty difficulty ,std::string bgmPath, std::string sfxPath, std::string backgroundPath, std::string comfigPath): _name(std::move(name)), _difficulty(difficulty) {
-    _bgm = std::make_shared<Util::BGM>(bgmPath);
-    _sfx = std::make_shared<Util::SFX>(sfxPath);
-    _osuParser = std::make_shared<OsuParser>();
-    _catcher = std::make_shared<Catcher>();
-    _background = std::make_shared<Background>(Background::level::level_1);
-    _hp = std::make_shared<HP>();
-    _scoreboard = std::make_shared<Scoreboard>();
-    _combo = std::make_shared<Combo>();
-    _continueButton = std::make_shared<ContinueButton>();
-    _retryButton = std::make_shared<RetryButton>();
-    _backButton = std::make_shared<BackButton>();
+Level::Level(std::string name, Difficulty difficulty,
+            const std::string& bgmPath, const std::string& sfxPath,
+            const std::string& backgroundPath, std::string  comfigPath)
+    : _name(std::move(name)), _difficulty(difficulty),_comfigPath(std::move(comfigPath)) {
+    _bgm             = std::make_shared<Util::BGM>(bgmPath);
+    _sfx             = std::make_shared<Util::SFX>(sfxPath);
+    _osuParser       = std::make_shared<OsuParser>();
+    _catcher         = std::make_shared<Catcher>();
+    _background      = std::make_shared<Background>(Background::level::level_1);
+    _hp              = std::make_shared<HP>();
+    _scoreboard      = std::make_shared<Scoreboard>();
+    _combo           = std::make_shared<Combo>();
+    _continueButton  = std::make_shared<ContinueButton>();
+    _retryButton     = std::make_shared<RetryButton>();
+    _backButton      = std::make_shared<BackButton>();
 }
 
 void Level::Initial() {
-    OsuParser::ParseFile("../Resources/music/CRYCHIC - Haruhikage (TV Size) (lkx_Shore) [Normal].osu", _levelData);
+    OsuParser::ParseFile(_comfigPath, _levelData);
     _approachMs = _levelData.approachMs;
     // std::cout << "=== LevelData dump ===\n"
     //          << "object count: " << _levelData.objects.size() << "\n\n";
@@ -39,33 +42,13 @@ void Level::Initial() {
     std::sort(_levelData.objects.begin(), _levelData.objects.end(),
               [](auto& a, auto& b){ return a.hitTime < b.hitTime; });
 
-    // 3. 計算真正開始的 timestamp
     int64_t now = Util::Time::GetElapsedTimeMs();
-    _startTimeMs = now + _leadInMs;
+    _startTimeMs = now + _approachMs;
 
-    // 4. 預載在準備時間內就要進場的水果
-    //    也就是 spawnTime < 0 的那些
-    for (; _nextIndex < _levelData.objects.size(); ++_nextIndex) {
-        auto& o = _levelData.objects[_nextIndex];
-        int64_t spawnTime = o.hitTime - _approachMs;
-        if (spawnTime >= 0) break;  // 後面的都到準備時間後才處理
-        // 立刻生成，但「spawnTime」仍保留負值
-        auto fruit = std::make_shared<Fruit>(Fruit::FruitType::Apple);
-        int worldX = o.x - 256;
-        fruit->m_Transform.translation = { worldX, _spawnStartY };
-        fruit->spawnTime = spawnTime;
-        fruit->hitTime   = o.hitTime;
-        fruits.push_back(fruit);
-        AddChild(fruit);
-    }
-
-    // 5. 其它初始化（BGM、UI、加入 Catcher/背景等）
-    _started = false;
     // 假設 PTSD 設定：世界 X ∈ [-256,+256]、Y ∈ [-144,+144]
     _scaleX = 512.f / 512.f;  // → 若需要拉伸改這裡
     _scaleY = 288.f / 384.f;
 
-    _bgm->Play();
     _scoreboard->SetScore(0);
     _continueButton->SetVisible(false);
     _retryButton->SetVisible(false);
@@ -83,6 +66,11 @@ void Level::Initial() {
 }
 
 void Level::Update() {
+    if(!_isBgmPlay)
+        if(Util::Time::GetElapsedTimeMs() >= _startTimeMs) {
+            _bgm->Play();
+            _isBgmPlay = true;
+        }
     HandleInput();
     UpdateFruitSpawning();
     UpdateFruits();
@@ -94,11 +82,16 @@ void Level::Update() {
 
 
 int Level::Pause() {
+    if (_pauseStartTimeMs == 0.0f) {
+        _pauseStartTimeMs = Util::Time::GetElapsedTimeMs();
+    }
     glm::vec2 mouseposition = Util::Input::GetCursorPosition();
     _bgm->Pause();
     SetPauseButton(true);
     if(Util::Input::IsKeyDown(Util::Keycode::ESCAPE) || _continueButton->IsButtonClick(mouseposition)) {
         SetPauseButton(false);
+        _totalPauseTimeMs += Util::Time::GetElapsedTimeMs() - _pauseStartTimeMs;
+        _pauseStartTimeMs = 0;
         return 1;
     }
 
@@ -129,7 +122,7 @@ void Level::UpdateFruitSpawning() {
     if (_nextIndex >= _levelData.objects.size()) return;
 
     int64_t now     = Util::Time::GetElapsedTimeMs();
-    _runTimeMs      = now - _startTimeMs;
+    _runTimeMs      = now - _startTimeMs - _totalPauseTimeMs;
 
     while (_nextIndex < _levelData.objects.size() &&
            _runTimeMs >= _levelData.objects[_nextIndex].hitTime - _approachMs)
@@ -158,13 +151,14 @@ void Level::UpdateFruits() {
 
         auto& fruit = *it;
 
-        // 下墜：線性位移 = 落下距離 / 提前量
-        // float progress = float(now - fruit->spawnTime) / _approachMs;
-        // if (progress < 0.f) progress = 0.f;
-        // if (progress > 1.f) progress = 1.f;
-        // fruit->m_Transform.translation.y = _spawnStartY - progress * (_spawnStartY + 130.f);
+        float elapsed   = float(_runTimeMs - fruit->spawnTime);
+        float duration  = float(fruit->hitTime - fruit->spawnTime);
+        float progress  = elapsed / duration;
 
-        fruit->m_Transform.translation.y -= 10;//= (_spawnStartY + 130.f) / _approachMs * (_runTimeMs / (fruit->hitTime - fruit->spawnTime));
+        float dropDist = _spawnStartY + 100.f;
+        float y = _spawnStartY - dropDist * progress;
+
+        fruit->m_Transform.translation.y = y;
 
         // 判定區間 (依你原本邏輯調整)
         auto pos     = fruit->m_Transform.translation;
@@ -180,7 +174,7 @@ void Level::UpdateFruits() {
             it = fruits.erase(it);
             _combo->AddCombo(1);
             _sfx->Play();
-            std::cout<<_runTimeMs<<"ms"<< std::endl;
+            std::cout<<"hitTime: "<<_runTimeMs<<"ms"<< std::endl;
             continue;
         }
 
@@ -205,6 +199,29 @@ void Level::SetPauseButton(bool state) {
 
 void Level::ResumeBGM() {
     _bgm->Resume();
+}
+
+void Level::ClearState() {
+    // Remove and clear all fruits
+    for (auto& fruit : fruits) {
+        RemoveChild(fruit);
+    }
+    fruits.clear();
+
+    // Reset indices and timers
+    _nextIndex = 0;
+    _runTimeMs = 0;
+    _pauseStartTimeMs = 0;
+    _totalPauseTimeMs = 0;
+    _isBgmPlay = false;
+
+    // Reset UI and player state
+    _scoreboard->ResetScore();
+    _combo->ResetCombo();
+    //_hp->Reset();
+
+    // Stop BGM
+    _bgm->Pause();
 }
 
 // void Level::Update() {
