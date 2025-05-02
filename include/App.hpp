@@ -3,7 +3,6 @@
 
 #include "Util/Renderer.hpp"
 #include "Level.h"
-#include "LevelManager.h"
 #include "MainMenu.h"
 #include "SelectLevel.h"
 
@@ -36,7 +35,6 @@ private:
     State m_CurrentState = State::START;
     Util::Renderer m_Root;
     std::shared_ptr<Level> _level;
-    std::shared_ptr<LevelManager> _levelManager;
     std::shared_ptr<Level> _currentLevel;
 
     std::shared_ptr<MainMenu> _mainMenu;

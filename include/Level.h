@@ -28,11 +28,10 @@ public:
         Normal,
         Hard
     };
-    Level(std::string, Difficulty, const std::string&, const std::string&, const std::string&, std::string );
     enum class Music {
         Haruhikage
     };
-    Level(std::string, Difficulty, std::string, std::string, std::string, std::string);
+    Level(std::string, Difficulty, const std::string&, const std::string&, const std::string&, std::string );
     ~Level() = default;
 
     void Initial();
