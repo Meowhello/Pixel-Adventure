@@ -18,6 +18,7 @@ struct HitObject {
 struct LevelData {
     std::vector<HitObject> objects;  //!< 已依 hitTime 升冪排序
     int diff;
+    int hpDrainRate = 0;      // ← 新增：HPDrainRate (0~10)
     int approachMs = 1200;           //!< 水果提前出現時間（依 AR 計算）
 };
 

@@ -5,6 +5,7 @@
 #include <fstream>
 #include <sstream>
 #include <optional>
+#include <string.h>
 
 // ───────── 工具函式 ────────────────────────────────────────────────
 static inline std::string trim(const std::string &s) {
@@ -49,6 +50,11 @@ bool OsuParser::ParseFile(const std::string &path, LevelData &out){
 
         // ───────── Difficulty 取 SliderMultiplier 與 AR ─────
         if(cur==Sec::Diff){
+            if (auto p = line.find("HPDrainRate:"); p != std::string::npos) {
+                // 取出冒號之後的數字
+                std::string v = trim(line.substr(p + strlen("HPDrainRate:")));
+                out.hpDrainRate = std::stoi(v);
+            }
             if(auto p=line.find("SliderMultiplier:");p!=std::string::npos)
                 sliderMultiplier= toD(trim(line.substr(p+17)));
             if(auto p=line.find("ApproachRate:");p!=std::string::npos){
