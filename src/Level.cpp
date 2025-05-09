@@ -211,7 +211,8 @@ void Level::UpdateFruits() {
             std::cout<<"hitTime: "<<_runTimeMs<<"ms"<< std::endl;
             continue;
         }
-
+        std::cout<<"level "<<_levelData.hpDrainRate<<std::endl;
+        std::cout<<"hp "<<_hp->Gethp()<<std::endl;
         // 超出底線
         if (pos.y < -400.f) {
             fruit->SetVisible(false);
