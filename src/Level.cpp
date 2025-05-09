@@ -6,6 +6,7 @@
 #include <iostream>
 #include <utility>
 
+// #include "../PTSD/lib/googletest/googlemock/include/gmock/gmock-matchers.h"
 #include "Util/Input.hpp"
 #include "Util/Time.hpp"
 
@@ -117,7 +118,7 @@ void Level::Finish() {
     _scoreboard->SetVisible(false);
     _hp->SetVisible(false);
     _catcher->SetVisible(false);
-    m_Drawable = std::make_shared<Util::Image>((RESOURCE_DIR "/Image/game_sources/end_page.png"));
+    AddChild(_finish);
 }
 
 
@@ -202,6 +203,11 @@ void Level::UpdateFruits() {
         ++it;
     }
 }
+
+float Level::Gethp() {
+    return _hp->Gethp();
+}
+
 
 void Level::SetPauseButton(bool state) {
     _continueButton->SetVisible(state);

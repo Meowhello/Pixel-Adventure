@@ -72,6 +72,8 @@ add_executable(${PROJECT_NAME}
         src/HP.cpp
         include/OsuParser.h
         src/OsuParser.cpp
+        include/Finish.h
+        src/Finish.cpp
 )
 
 if(MSVC)

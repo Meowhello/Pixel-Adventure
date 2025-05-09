@@ -19,7 +19,9 @@
 #include "Button/BackButton.h"
 #include "Util/BGM.hpp"
 #include "Util/SFX.hpp"
+#include "Finish.h"
 #include "OsuParser.h"
+#include "../PTSD/example/include/App.hpp"
 
 class Level: public Util::GameObject {
 public:
@@ -38,6 +40,7 @@ public:
     int GetMusicTime();
     int GetStartTime();
     void Update();
+    float Gethp();
     int  Pause();
     void Finish();
     void End();
@@ -67,7 +70,6 @@ private:
     int music_time=0;
     int start_time;
 
-
     std::shared_ptr<Util::BGM> _bgm;
     std::shared_ptr<Util::SFX> _sfx;
     std::shared_ptr<OsuParser> _osuParser;
@@ -75,6 +77,7 @@ private:
     std::shared_ptr<Catcher> _catcher;
     std::shared_ptr<HP> _hp;
     std::vector<std::shared_ptr<Fruit>> fruits;
+    std::shared_ptr<class Finish> _finish;
     std::shared_ptr<Background> _background;
     std::shared_ptr<Scoreboard> _scoreboard;
     std::shared_ptr<Combo> _combo;
