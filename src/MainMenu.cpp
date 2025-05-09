@@ -28,3 +28,11 @@ int MainMenu::Update() {
     return 0;
 }
 
+void MainMenu::background() {
+    std::string backgroundpic;
+    auto randpic=rand()%(22); //max-min+1-min
+    // switch (randpic) {
+    //     case 0:
+    //
+    // }
+}

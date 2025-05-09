@@ -71,7 +71,7 @@ void App::GameUpdate() {
     }
 
     if(_level->Gethp()<=0) {
-        m_Root.RemoveChild(_level);
+        // m_Root.RemoveChild(_level);
         m_CurrentState=State::FINISH;
     }
 

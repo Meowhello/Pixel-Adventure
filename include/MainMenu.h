@@ -16,6 +16,7 @@ public:
     MainMenu();
     ~MainMenu() = default;
 
+    void background();
     int Update();
 private:
     std::shared_ptr<PlayButton> _playButton = std::make_shared<PlayButton>();

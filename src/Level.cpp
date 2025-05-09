@@ -115,11 +115,15 @@ int Level::Pause() {
 }
 
 void Level::Finish() {
-    // _bgm->Resume();
-    // _combo->SetVisible(false);
-    // _scoreboard->SetVisible(false);
-    // _hp->SetVisible(false);
-    // _catcher->SetVisible(false);
+    _bgm->Pause();
+    _combo->SetVisible(false);
+    _scoreboard->SetVisible(false);
+    _hp->SetVisible(false);
+    _catcher->SetVisible(false);
+    for (auto& fruit : fruits) {
+        RemoveChild(fruit);
+    }
+    fruits.clear();
 }
 
 
