@@ -218,7 +218,7 @@ void Level::UpdateFruits() {
             RemoveChild(fruit);
             it = fruits.erase(it);
             _combo->ResetCombo();
-            _hp->hpdrain(10);
+            _hp->hpdrain(_levelData.hpDrainRate);
             continue;
         }
 
