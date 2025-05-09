@@ -10,9 +10,11 @@ SelectLevel::SelectLevel() {
     AddChild(_background);
     // 只把配置 push 进来
     _configs = {
-        {"Haruhikage", Level::Difficulty::Normal, "../Resources/Songs/2070468 CRYCHIC - Haruhikage (TV Size)/audio.mp3", "../Resources/music/normal-hitclap.wav", "../Resources/Songs/2070468 CRYCHIC - Haruhikage (TV Size)/1.png", "../Resources/Songs/2070468 CRYCHIC - Haruhikage (TV Size)/CRYCHIC - Haruhikage (TV Size) (lkx_Shore) [Normal].osu", "../Resources/Image/select_level/easy_open.png"},
-        {"Georgette Me, Georgette You", Level::Difficulty::Normal, "../Resources/Songs/2308600 Ave Mujica - Georgette Me, Georgette You (TV Size)/audio.mp3", "../Resources/music/normal-hitclap.wav", "../Resources/Songs/2308600 Ave Mujica - Georgette Me, Georgette You (TV Size)/BG.PNG", "../Resources/Songs/2308600 Ave Mujica - Georgette Me, Georgette You (TV Size)/Ave Mujica - Georgette Me, Georgette You (TV Size) (Plus4j) [GfTNT's Hard].osu", "../Resources/Image/select_level/easy_open.png"},
-        // … 其他项…
+        {"Haruhikage", "../Resources/Songs/2070468 CRYCHIC - Haruhikage (TV Size)/audio.mp3", "../Resources/music/normal-hitclap.wav", "../Resources/Songs/2070468 CRYCHIC - Haruhikage (TV Size)/1.png", "../Resources/Songs/2070468 CRYCHIC - Haruhikage (TV Size)/CRYCHIC - Haruhikage (TV Size) (lkx_Shore) [Normal].osu", "../Resources/Image/select_level/easy_open.png"},
+        {"Georgette Me, Georgette You", "../Resources/Songs/2308600 Ave Mujica - Georgette Me, Georgette You (TV Size)/audio.mp3", "../Resources/music/normal-hitclap.wav", "../Resources/Songs/2308600 Ave Mujica - Georgette Me, Georgette You (TV Size)/BG.PNG", "../Resources/Songs/2308600 Ave Mujica - Georgette Me, Georgette You (TV Size)/Ave Mujica - Georgette Me, Georgette You (TV Size) (Plus4j) [GfTNT's Hard].osu", "../Resources/Image/select_level/easy_open.png"},
+        {"Miracle Sugite Yabai (feat shully)", "../Resources/Songs/682290 Hige Driver - Miracle Sugite Yabai (feat shully)/audio.mp3", "../Resources/music/normal-hitclap.wav", "../Resources/Songs/682290 Hige Driver - Miracle Sugite Yabai (feat shully)/Miracle_Sugite.jpg", "../Resources/Songs/682290 Hige Driver - Miracle Sugite Yabai (feat shully)/Hige Driver - Miracle Sugite Yabai (feat. shully) (Milan-) [Normal].osu", "../Resources/Image/select_level/easy_open.png"},
+        {"Hanaarashi", "../Resources/Songs/751771 Cranky - Hanaarashi/audio.mp3", "../Resources/music/normal-hitclap.wav", "../Resources/Songs/751771 Cranky - Hanaarashi/Hanarashi.PNG", "../Resources/Songs/751771 Cranky - Hanaarashi/Cranky - Hanaarashi (Mirash) [Normal].osu", "../Resources/Image/select_level/easy_open.png"},
+        {}
     };
     for (int i = 0; i < _configs.size(); ++i) {
         auto btn = std::make_shared<LevelButton>(_configs[i].btnPath, 400 + i * 10, i * -100);
@@ -36,8 +38,7 @@ std::shared_ptr<Level> SelectLevel::Updtate() {
         if(_buttons[i]->IsButtonClick(mouseposition)) {
             auto &cfg = _configs[i];
             return std::make_shared<Level>(
-                cfg.name, cfg.diff,
-                cfg.bgmPath, cfg.sfxPath,
+                cfg.name, cfg.bgmPath, cfg.sfxPath,
                 cfg.bgPath, cfg.osuPath);
         }
     }

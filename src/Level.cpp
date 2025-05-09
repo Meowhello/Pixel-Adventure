@@ -10,10 +10,10 @@
 #include "Util/Input.hpp"
 #include "Util/Time.hpp"
 
-Level::Level(std::string name, Difficulty difficulty,
+Level::Level(std::string name,
             const std::string& bgmPath, const std::string& sfxPath,
             const std::string& backgroundPath, std::string  comfigPath)
-    : _name(std::move(name)), _difficulty(difficulty),_comfigPath(std::move(comfigPath)) {
+    : _name(std::move(name)),_comfigPath(std::move(comfigPath)) {
     _bgm             = std::make_shared<Util::BGM>(bgmPath);
     _sfx             = std::make_shared<Util::SFX>(sfxPath);
     _osuParser       = std::make_shared<OsuParser>();
