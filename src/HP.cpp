@@ -11,7 +11,7 @@ HP::HP() {
 }
 
 void HP::hpdrain(int level) {
-    if (m_Transform.scale.x<0) {
+    if (m_Transform.scale.x<=0) {
         m_Transform.scale.x=0;
         m_Transform.translation.x=-500;
     }
@@ -51,6 +51,6 @@ void HP::restart() {
     m_Transform.translation={-300,350};
 }
 
-int HP::Gethp() {
+float HP::Gethp() {
     return m_Transform.scale.x;
 }

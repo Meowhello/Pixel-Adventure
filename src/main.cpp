@@ -28,6 +28,10 @@ int main(int, char**) {
                 app.GameUpdate();
             break;
 
+            case App::State::FINISH:
+                app.GameFinish();
+            break;
+
             case App::State::PAUSE:
                 app.Pasue();
                 break;

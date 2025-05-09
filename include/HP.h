@@ -13,7 +13,7 @@ public:
     ~HP() = default;
     void hpdrain(int level);
     void restart();
-    int Gethp();
+    float Gethp();
 
     // std::shared_ptr<OsuParser> _osuParser;
 
