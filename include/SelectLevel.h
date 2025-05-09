@@ -18,7 +18,6 @@ public:
 private:
     struct LevelConfig {
         std::string name;
-        Level::Difficulty diff;
         std::string bgmPath, sfxPath, bgPath, osuPath, btnPath;
     };
     std::vector<LevelConfig> _configs;

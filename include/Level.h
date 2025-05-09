@@ -25,15 +25,10 @@
 
 class Level: public Util::GameObject {
 public:
-    enum class Difficulty {
-        Easy,
-        Normal,
-        Hard
-    };
     enum class Music {
         Haruhikage
     };
-    Level(std::string, Difficulty, const std::string&, const std::string&, const std::string&, std::string );
+    Level(std::string, const std::string&, const std::string&, const std::string&, std::string );
     ~Level() = default;
 
     void Initial();
@@ -52,7 +47,6 @@ public:
 private:
     void SetPauseButton(bool);
     std::string _name;
-    Difficulty _difficulty;
     std::string _comfigPath;
 
     LevelData        _levelData;

@@ -10,10 +10,10 @@
 #include "Util/Input.hpp"
 #include "Util/Time.hpp"
 
-Level::Level(std::string name, Difficulty difficulty,
+Level::Level(std::string name,
             const std::string& bgmPath, const std::string& sfxPath,
             const std::string& backgroundPath, std::string  comfigPath)
-    : _name(std::move(name)), _difficulty(difficulty),_comfigPath(std::move(comfigPath)) {
+    : _name(std::move(name)),_comfigPath(std::move(comfigPath)) {
     _bgm             = std::make_shared<Util::BGM>(bgmPath);
     _sfx             = std::make_shared<Util::SFX>(sfxPath);
     _osuParser       = std::make_shared<OsuParser>();
@@ -34,13 +34,13 @@ void Level::Initial() {
     std::cout << "=== LevelData dump ===\n"
              << "object count: " << _levelData.objects.size() << "\n\n";
 
-    // for (std::size_t i = 0; i <  _levelData.objects.size(); ++i) {
-    //     const auto& o = _levelData.objects[i];
-    //     std::cout << "#" << i
-    //               << "  x=" << o.x
-    //               << "  y=" << o.y
-    //               << "  hitTime=" << o.hitTime << " ms\n";
-    // }
+    for (std::size_t i = 0; i <  _levelData.objects.size(); ++i) {
+        const auto& o = _levelData.objects[i];
+        std::cout << "#" << i
+                  << "  x=" << o.x
+                  << "  y=" << o.y
+                  << "  hitTime=" << o.hitTime << " ms\n";
+    }
     std::sort(_levelData.objects.begin(), _levelData.objects.end(),
               [](auto& a, auto& b){ return a.hitTime < b.hitTime; });
 
@@ -70,6 +70,8 @@ void Level::Initial() {
 }
 
 void Level::Update() {
+    int64_t now = Util::Time::GetElapsedTimeMs();
+    _runTimeMs  = now - _startTimeMs - _totalPauseTimeMs;
     if(!_isBgmPlay)
         if(Util::Time::GetElapsedTimeMs() >= _startTimeMs) {
             _bgm->Play();
@@ -138,9 +140,6 @@ void Level::HandleInput() {
 void Level::UpdateFruitSpawning() {
     if (_nextIndex >= _levelData.objects.size()) return;
 
-    int64_t now     = Util::Time::GetElapsedTimeMs();
-    _runTimeMs      = now - _startTimeMs - _totalPauseTimeMs;
-
     while (_nextIndex < _levelData.objects.size() &&
            _runTimeMs >= _levelData.objects[_nextIndex].hitTime - _approachMs)
     {
@@ -184,7 +183,6 @@ void Level::UpdateFruitSpawning() {
 void Level::UpdateFruits() {
             std::cout<<"HP:"<<_hp->Gethp()<<std::endl;
 
-    auto now = Util::Time::GetElapsedTimeMs();
     for (auto it = fruits.begin(); it != fruits.end(); ) {
 
         auto& fruit = *it;
