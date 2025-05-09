@@ -10,14 +10,8 @@
 
 class Background : public Util::GameObject {
 public:
-    enum class level {
-        MainMenu,
-        level_1,
-        pause,
-    };
-
-    Background(level change);
-
+    Background(std::string);
+    ~Background() = default;
 };
 
 #endif //BACKGROUND_H

@@ -12,7 +12,6 @@ void App::Start() {
     LOG_TRACE("Start");
     _mainMenu = std::make_shared<MainMenu>();
     _selectLevel = std::make_shared<SelectLevel>();
-    _hp = std::make_shared<HP>();
     m_CurrentState = State::MENU;
     m_Root.AddChild(_mainMenu);
 }
@@ -40,6 +39,12 @@ void App::SelectLevelUpdate() {
         m_CurrentState = State::GAME_INITIAL;
     }
 
+    if (Util::Input::IsKeyDown(Util::Keycode::ESCAPE)) {
+        m_Root.RemoveChild(_selectLevel);
+        m_Root.AddChild(_mainMenu);
+        m_CurrentState = State::MENU;
+    }
+
     if (Util::Input::IfExit()) {
         m_CurrentState = State::END;
     }
@@ -56,7 +61,6 @@ void App::GameInitial() {
 
 void App::GameUpdate() {
     _level->Update();
-    std::cout<<"hp "<<_hp->Gethp()<<std::endl;
     if(Util::Input::IsKeyDown(Util::Keycode::ESCAPE)) {
         m_CurrentState = State::PAUSE;
     }
@@ -65,7 +69,7 @@ void App::GameUpdate() {
         m_CurrentState = State::END;
     }
 
-    if(_hp->Gethp()<=0) {
+    if(false) {
         m_CurrentState=State::FINISH;
     }
 

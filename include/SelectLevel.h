@@ -23,7 +23,7 @@ private:
     };
     std::vector<LevelConfig> _configs;
     std::vector<std::shared_ptr<LevelButton>> _buttons;
-    std::shared_ptr<Background> _background = std::make_shared<Background>(Background::level::MainMenu);
+    std::shared_ptr<Background> _background = std::make_shared<Background>("../Resources/Image/main_page/main_background.png");
 };
 
 #endif //SELECTLEVEL_H

@@ -11,11 +11,12 @@
 class Catcher : public Util::GameObject{
 public:
     Catcher();
-    // ~Catcher();
+    ~Catcher() = default;
 
     // void show();
-    void moveLeft();
-    void moveRight();
+    void MoveLeft();
+    void MoveRight();
+    void ResetPos();
 
 private:
     float moveSpeed;

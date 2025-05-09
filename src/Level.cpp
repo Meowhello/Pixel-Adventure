@@ -17,7 +17,7 @@ Level::Level(std::string name, Difficulty difficulty,
     _sfx             = std::make_shared<Util::SFX>(sfxPath);
     _osuParser       = std::make_shared<OsuParser>();
     _catcher         = std::make_shared<Catcher>();
-    _background      = std::make_shared<Background>(Background::level::level_1);
+    _background      = std::make_shared<Background>(backgroundPath);
     _hp              = std::make_shared<HP>();
     _scoreboard      = std::make_shared<Scoreboard>();
     _combo           = std::make_shared<Combo>();
@@ -27,11 +27,12 @@ Level::Level(std::string name, Difficulty difficulty,
 }
 
 void Level::Initial() {
+    _levelData.objects.clear();
     OsuParser::ParseFile(_comfigPath, _levelData);
     _approachMs = _levelData.approachMs;
-    // std::cout << "=== LevelData dump ===\n"
-    //          << "object count: " << _levelData.objects.size() << "\n\n";
-    //
+    std::cout << "=== LevelData dump ===\n"
+             << "object count: " << _levelData.objects.size() << "\n\n";
+
     // for (std::size_t i = 0; i <  _levelData.objects.size(); ++i) {
     //     const auto& o = _levelData.objects[i];
     //     std::cout << "#" << i
@@ -45,8 +46,7 @@ void Level::Initial() {
     int64_t now = Util::Time::GetElapsedTimeMs();
     _startTimeMs = now + _approachMs;
 
-    // 假設 PTSD 設定：世界 X ∈ [-256,+256]、Y ∈ [-144,+144]
-    _scaleX = 512.f / 512.f;  // → 若需要拉伸改這裡
+    _scaleX = 640.f / 512.f;  // → 若需要拉伸改這裡
     _scaleY = 288.f / 384.f;
     _hp->restart();
 
@@ -54,6 +54,8 @@ void Level::Initial() {
     _continueButton->SetVisible(false);
     _retryButton->SetVisible(false);
     _backButton->SetVisible(false);
+
+    _background->m_Transform.scale = {0.6666667, 0.6666667};
 
     AddChild(_catcher);
     AddChild(_background);
@@ -123,9 +125,9 @@ void Level::Finish() {
 
 void Level::HandleInput() {
     if (Util::Input::IsKeyPressed(Util::Keycode::LEFT))
-        _catcher->moveLeft();
+        _catcher->MoveLeft();
     if (Util::Input::IsKeyPressed(Util::Keycode::RIGHT))
-        _catcher->moveRight();
+        _catcher->MoveRight();
 }
 
 
@@ -140,10 +142,30 @@ void Level::UpdateFruitSpawning() {
     {
         const auto& obj = _levelData.objects[_nextIndex];
 
-        auto fruit = std::make_shared<Fruit>(Fruit::FruitType::Apple);
+        Fruit::FruitType fruitType;
+        auto rand_num = rand()%5; //隨機水果
+        switch (rand_num) {
+            case 0:
+                fruitType = Fruit::FruitType::Apple;
+            break;
+            case 1:
+                fruitType = Fruit::FruitType::Bananas;
+            break;
+            case 2:
+                fruitType = Fruit::FruitType::Pear;
+            break;
+            case 3:
+                fruitType = Fruit::FruitType::Grapes;
+            break;
+            case 4:
+                fruitType = Fruit::FruitType::Orange;
+            break;
+        }
+
+        auto fruit = std::make_shared<Fruit>(fruitType);
 
         // 解析 X：-256 ~ +256
-        int worldX = (obj.x - 256);
+        int worldX = (obj.x - 256) * _scaleX;
         fruit->m_Transform.translation = { worldX, _spawnStartY };
 
         fruit->spawnTime = obj.hitTime - _approachMs;   // ★ 關鍵一行
@@ -156,6 +178,7 @@ void Level::UpdateFruitSpawning() {
 }
 
 void Level::UpdateFruits() {
+            std::cout<<"HP:"<<_hp->Gethp()<<std::endl;
 
     auto now = Util::Time::GetElapsedTimeMs();
     for (auto it = fruits.begin(); it != fruits.end(); ) {
@@ -230,7 +253,7 @@ void Level::ClearState() {
     // Reset UI and player state
     _scoreboard->ResetScore();
     _combo->ResetCombo();
-    //_hp->Reset();
+    _catcher->ResetPos();
 
     // Stop BGM
     _bgm->Pause();

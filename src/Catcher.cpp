@@ -18,7 +18,7 @@ Catcher::Catcher()/*: myImage("../Resources/Image/game_sources/fruit-ryuuta.png"
     m_ZIndex=2;
 }
 
-void Catcher::moveLeft() {
+void Catcher::MoveLeft() {
     if(direction) {
         m_Transform.scale ={-0.8,0.8};
         direction = false;
@@ -32,7 +32,7 @@ void Catcher::moveLeft() {
 
 }
 
-void Catcher::moveRight() {
+void Catcher::MoveRight() {
     if(!direction) {
         m_Transform.scale ={0.8,0.8};
         direction = true;
@@ -44,4 +44,10 @@ void Catcher::moveRight() {
         m_Transform.translation.x += moveSpeed;
     if(m_Transform.translation.x>300)
         m_Transform.translation.x=300;
+}
+
+void Catcher::ResetPos() {
+    m_Transform.translation={0,-230};
+    m_Transform.scale ={0.8,0.8};
+    direction = true;
 }

@@ -20,7 +20,7 @@ public:
 private:
     std::shared_ptr<PlayButton> _playButton = std::make_shared<PlayButton>();
     std::shared_ptr<ExitButton> _exitButton = std::make_shared<ExitButton>();
-    std::shared_ptr<Background> _background = std::make_shared<Background>(Background::level::MainMenu);
+    std::shared_ptr<Background> _background = std::make_shared<Background>("../Resources/Image/main_page/main_background.png");
 };
 
 #endif //MAINMENU_H

@@ -5,20 +5,7 @@
 
 #include "MainMenu.h"
 
-Background::Background(level change=level::level_1) {
-    std::string filepath;
-    switch (change) {
-        case level::MainMenu:
-            filepath = (RESOURCE_DIR "/Image/main_page/main_background.png");
-            m_Transform.scale={0.67,0.67};
-            break;
-        case level::level_1:
-            filepath = (RESOURCE_DIR "/Image/game_sources/background.jpg");
-            break;
-        case level::pause:
-            filepath = (RESOURCE_DIR "/Image/game_sources/pause_background.png");
-            break;
-    }
-    m_Drawable = std::make_shared<Util::Image>(filepath);
+Background::Background(std::string bgPath) {
+    m_Drawable = std::make_shared<Util::Image>(bgPath);
     m_ZIndex = -10;
 }

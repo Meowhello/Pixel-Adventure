@@ -59,7 +59,7 @@ private:
     float          _totalPauseTimeMs  = 0;
     std::size_t      _nextIndex       = 0;     // 下一顆水果 index
     int              _approachMs      = 1800;  // 提前量 (可依 AR 動態計算)
-    int              _spawnStartY     = 360; // 螢幕最上方以外
+    int              _spawnStartY     = 540; // 螢幕最上方以外
     float            _scaleX          = 1.f;   // 座標轉換
     float            _scaleY          = 1.f;
     bool             _isBgmPlay       = false;

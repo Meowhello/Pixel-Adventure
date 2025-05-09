@@ -6,28 +6,12 @@
 #include <iostream>
 
 #include "Util/Input.hpp"
-
-// SelectLevel::SelectLevel() {
-//     AddChild(_background);
-//     for(int i = 0; i<30;i++) {
-//         auto levelButton = std::make_shared<LevelButton>("../Resources/Image/select_level/easy_open.png", 400 + i * 10, i * -100);
-//         _levelButtonVector.push_back(levelButton);
-//         AddChild(levelButton);
-//     }
-//     auto level = std::make_shared<Level>("Haruhikage", Level::Difficulty::Easy,
-//                                         "../Resources/music/Haruhikage_CRYCHIC.mp3",
-//                                         "../Resources/music/normal-hitclap.wav",
-//                                         "",
-//                                         "../Resources/music/CRYCHIC - Haruhikage (TV Size) (lkx_Shore) [Normal].osu");
-//     for(int i = 0; i<30;i++) {
-//         _levelVector.push_back(level);
-//     }
-// }
-
 SelectLevel::SelectLevel() {
+    AddChild(_background);
     // 只把配置 push 进来
     _configs = {
-        {"Haruhikage", Level::Difficulty::Normal, "../Resources/music/Haruhikage_CRYCHIC.mp3", "../Resources/music/normal-hitclap.wav", "", "../Resources/music/CRYCHIC - Haruhikage (TV Size) (lkx_Shore) [Normal].osu", "../Resources/Image/select_level/easy_open.png"},
+        {"Haruhikage", Level::Difficulty::Normal, "../Resources/Songs/2070468 CRYCHIC - Haruhikage (TV Size)/audio.mp3", "../Resources/music/normal-hitclap.wav", "../Resources/Songs/2070468 CRYCHIC - Haruhikage (TV Size)/1.png", "../Resources/Songs/2070468 CRYCHIC - Haruhikage (TV Size)/CRYCHIC - Haruhikage (TV Size) (lkx_Shore) [Normal].osu", "../Resources/Image/select_level/easy_open.png"},
+        {"Georgette Me, Georgette You", Level::Difficulty::Normal, "../Resources/Songs/2308600 Ave Mujica - Georgette Me, Georgette You (TV Size)/audio.mp3", "../Resources/music/normal-hitclap.wav", "../Resources/Songs/2308600 Ave Mujica - Georgette Me, Georgette You (TV Size)/BG.PNG", "../Resources/Songs/2308600 Ave Mujica - Georgette Me, Georgette You (TV Size)/Ave Mujica - Georgette Me, Georgette You (TV Size) (Plus4j) [GfTNT's Hard].osu", "../Resources/Image/select_level/easy_open.png"},
         // … 其他项…
     };
     for (int i = 0; i < _configs.size(); ++i) {
