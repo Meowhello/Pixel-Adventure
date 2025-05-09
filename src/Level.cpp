@@ -6,6 +6,7 @@
 #include <iostream>
 #include <utility>
 
+// #include "../PTSD/lib/googletest/googlemock/include/gmock/gmock-matchers.h"
 #include "Util/Input.hpp"
 #include "Util/Time.hpp"
 
@@ -114,12 +115,11 @@ int Level::Pause() {
 }
 
 void Level::Finish() {
-    _bgm->Resume();
-    _combo->SetVisible(false);
-    _scoreboard->SetVisible(false);
-    _hp->SetVisible(false);
-    _catcher->SetVisible(false);
-    m_Drawable = std::make_shared<Util::Image>((RESOURCE_DIR "/Image/game_sources/end_page.png"));
+    // _bgm->Resume();
+    // _combo->SetVisible(false);
+    // _scoreboard->SetVisible(false);
+    // _hp->SetVisible(false);
+    // _catcher->SetVisible(false);
 }
 
 
@@ -226,6 +226,11 @@ void Level::UpdateFruits() {
     }
 }
 
+float Level::Gethp() {
+    return _hp->Gethp();
+}
+
+
 void Level::SetPauseButton(bool state) {
     _continueButton->SetVisible(state);
     _retryButton->SetVisible(state);
@@ -258,71 +263,3 @@ void Level::ClearState() {
     // Stop BGM
     _bgm->Pause();
 }
-
-// void Level::Update() {
-//
-//     HandleInput();
-//
-//     static auto lastDrop = Util::Time::GetElapsedTimeMs();
-//
-//     if(Util::Time::GetElapsedTimeMs() - lastDrop > 1000) { //一秒一個水果
-//         lastDrop = Util::Time::GetElapsedTimeMs();
-//         auto rand_num = rand()%6; //隨機水果
-//         switch (rand_num) {
-//             case 0:
-//                 fruits.push_back(std::make_shared<Fruit>(Fruit::FruitType::Apple));
-//             break;
-//             case 1:
-//                 fruits.push_back(std::make_shared<Fruit>(Fruit::FruitType::Bananas));
-//             break;
-//             case 2:
-//                 fruits.push_back(std::make_shared<Fruit>(Fruit::FruitType::Drop));
-//             break;
-//             case 3:
-//                 fruits.push_back(std::make_shared<Fruit>(Fruit::FruitType::Grapes));
-//             break;
-//             case 4:
-//                 fruits.push_back(std::make_shared<Fruit>(Fruit::FruitType::Orange));
-//             break;
-//             case 5:
-//                 fruits.push_back(std::make_shared<Fruit>(Fruit::FruitType::Pear));
-//             break;
-//         }
-//     }
-//
-//     for (const auto &fruit : fruits) { //水果++
-//         AddChild(fruit);
-//     }
-//
-//     static auto combo=0;
-//     for (int i = 0; i < fruits.size(); i++) { //一起控制所有的水果
-//         auto position = fruits[i]->m_Transform.translation; //控制 x 和 y
-//         auto catcherpos=_catcher->m_Transform.translation; //人物
-//         position.y -= 10 ; // 水果下墜
-//         fruits[i]->m_Transform.translation.y = position.y;
-//
-//         if(abs(position.x-catcherpos.x)<100 && position.y<=-130&& position.y>-220) { //判斷水果觸碰
-//             _scoreboard->AddScore(100);
-//             fruits[i]->SetVisible(false);
-//             RemoveChild(fruits.front());//拿掉最陣列最前面(首先掉下的)水果
-//             fruits.erase(fruits.begin());//拿掉最陣列最前面(首先掉下的)水果
-//             _combo->AddCombo(1);
-//             if(_combo->GetCombo()/5>=1) {
-//                 _scoreboard->AddScore(53*(_combo->GetCombo()/5));
-//             }
-//             _sfx->Play();
-//         }
-//         else if(position.y<-400) { //判斷水果落地
-//             fruits[i]->SetVisible(false);
-//             RemoveChild(fruits.front());
-//             fruits.erase(fruits.begin());
-//             _combo->ResetCombo();
-//         }
-//     }
-//
-//     _scoreboard->UpdateScoreboard();
-//     _scoreboard->Show();
-//
-//     _combo->UpdateCombo();
-//     _combo->Show();
-// }

@@ -15,6 +15,8 @@ public:
     void restart();
     float Gethp();
 
+    float hp;
+
     // std::shared_ptr<OsuParser> _osuParser;
 
 private:

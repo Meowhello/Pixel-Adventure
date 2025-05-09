@@ -40,6 +40,7 @@ private:
 
     std::shared_ptr<MainMenu> _mainMenu;
     std::shared_ptr<SelectLevel> _selectLevel;
+    std::shared_ptr<Finish> _finish;
 };
 
 #endif

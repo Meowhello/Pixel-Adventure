@@ -8,6 +8,7 @@ HP::HP() {
     m_Drawable=std::make_shared<Util::Image>(RESOURCE_DIR "/Image/game_sources/blood.png");
     m_Transform.translation={-300,350};
     m_ZIndex=2;
+    hp=1;
 }
 
 void HP::hpdrain(int level) {
@@ -43,10 +44,12 @@ void HP::hpdrain(int level) {
         }
         m_Transform.translation.x-=32*diff;
         m_Transform.scale.x-=0.1*diff;
+        // hp-=0.1*diff;
     }
 }
 
 void HP::restart() {
+    hp=1;
     m_Transform.scale={1,1};
     m_Transform.translation={-300,350};
 }

@@ -19,7 +19,9 @@
 #include "Button/BackButton.h"
 #include "Util/BGM.hpp"
 #include "Util/SFX.hpp"
+#include "Finish.h"
 #include "OsuParser.h"
+#include "../PTSD/example/include/App.hpp"
 
 class Level: public Util::GameObject {
 public:
@@ -38,6 +40,7 @@ public:
     int GetMusicTime();
     int GetStartTime();
     void Update();
+    float Gethp();
     int  Pause();
     void Finish();
     void End();
@@ -66,7 +69,6 @@ private:
 
     int music_time=0;
     int start_time;
-
 
     std::shared_ptr<Util::BGM> _bgm;
     std::shared_ptr<Util::SFX> _sfx;
