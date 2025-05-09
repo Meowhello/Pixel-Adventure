@@ -10,7 +10,7 @@ MainMenu::MainMenu() {
     AddChild(_exitButton);
     AddChild(_background);
     m_Drawable = std::make_shared<Util::Image>((RESOURCE_DIR "/Image/main_page/cd.png"));
-    m_Transform.scale = {2, 2};
+    m_Transform.scale = {0.8, 0.8};
     m_ZIndex = 5;
 }
 

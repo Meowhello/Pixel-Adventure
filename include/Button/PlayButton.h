@@ -11,6 +11,7 @@ public:
     PlayButton()
     : Button("../Resources/Image/main_page/play.png", 200, 75, 100, 380) {
         SetZIndex(0);
+        m_Transform.scale={0.6,0.6};
     }
     ~PlayButton() = default;
 };
