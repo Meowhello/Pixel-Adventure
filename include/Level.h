@@ -37,6 +37,7 @@ public:
     void Update();
     float Gethp();
     int  Pause();
+    int GameOver();
     void Finish();
     void End();
     void HandleInput();
@@ -45,6 +46,7 @@ public:
     void ResumeBGM();
     void ClearState();
 private:
+    void SetOverButton(bool);
     void SetPauseButton(bool);
     std::string _name;
     std::string _comfigPath;

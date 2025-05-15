@@ -28,6 +28,10 @@ int main(int, char**) {
                 app.GameUpdate();
             break;
 
+            case App::State::GAME_OVER:
+                app.GameOver();
+            break;
+
             case App::State::FINISH:
                 app.GameFinish();
             break;

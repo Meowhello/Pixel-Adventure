@@ -71,10 +71,30 @@ void App::GameUpdate() {
     }
 
     if(_level->Gethp()<=0) {
-        // m_Root.RemoveChild(_level);
-        m_CurrentState=State::FINISH;
+        m_CurrentState=State::GAME_OVER;
     }
 
+    m_Root.Update();
+}
+
+void App::GameOver() {
+    int signal = _level->GameOver();
+
+    if( signal == 1) {
+        m_Root.RemoveChild(_level);
+        _level->ClearState();
+        m_CurrentState = State::GAME_INITIAL;
+    }
+
+    if(Util::Input::IsKeyDown(Util::Keycode::ESCAPE) || signal == 2) {
+        m_Root.RemoveChild(_level);
+        m_Root.AddChild(_selectLevel);
+        m_CurrentState = State::SELECT_LEVEL;
+    }
+
+    if (Util::Input::IfExit()) {
+        m_CurrentState = State::END;
+    }
     m_Root.Update();
 }
 

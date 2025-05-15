@@ -116,16 +116,39 @@ int Level::Pause() {
     return 0;
 }
 
-void Level::Finish() {
-    _bgm->Pause();
-    _combo->SetVisible(false);
-    _scoreboard->SetVisible(false);
-    _hp->SetVisible(false);
-    _catcher->SetVisible(false);
-    for (auto& fruit : fruits) {
-        RemoveChild(fruit);
+int Level::GameOver() {
+    if (_pauseStartTimeMs == 0.0f) {
+        _pauseStartTimeMs = Util::Time::GetElapsedTimeMs();
     }
-    fruits.clear();
+    glm::vec2 mouseposition = Util::Input::GetCursorPosition();
+    _bgm->Pause();
+    SetOverButton(true);
+
+    if(_retryButton->IsButtonClick(mouseposition)) {
+        SetOverButton(false);
+        _combo->ResetCombo();
+        _scoreboard->ResetScore();
+        return 1;
+    }
+
+    if(Util::Input::IsKeyDown(Util::Keycode::ESCAPE) || _backButton->IsButtonClick(mouseposition)) {
+        SetOverButton(false);
+        return 2;
+    }
+
+    return 0;
+}
+
+void Level::Finish() {
+    // _bgm->Pause();
+    // _combo->SetVisible(false);
+    // _scoreboard->SetVisible(false);
+    // _hp->SetVisible(false);
+    // _catcher->SetVisible(false);
+    // for (auto& fruit : fruits) {
+    //     RemoveChild(fruit);
+    // }
+    // fruits.clear();
 }
 
 
@@ -233,6 +256,10 @@ float Level::Gethp() {
     return _hp->Gethp();
 }
 
+void Level::SetOverButton(bool state) {
+    _retryButton->SetVisible(state);
+    _backButton->SetVisible(state);
+}
 
 void Level::SetPauseButton(bool state) {
     _continueButton->SetVisible(state);

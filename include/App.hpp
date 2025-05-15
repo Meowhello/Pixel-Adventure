@@ -14,6 +14,7 @@ public:
         SELECT_LEVEL,
         GAME_INITIAL,
         GAME_UPDATE,
+        GAME_OVER,
         FINISH,
         PAUSE,
         END,
@@ -26,6 +27,7 @@ public:
     void SelectLevelUpdate();
     void GameInitial();
     void GameUpdate();
+    void GameOver();
     void GameFinish();
     void Pasue();
     void End(); // NOLINT(readability-convert-member-functions-to-static)
