@@ -14,11 +14,19 @@ void App::Start() {
     _selectLevel = std::make_shared<SelectLevel>();
     _finish = std::make_shared<Finish>();
     m_CurrentState = State::MENU;
+
     m_Root.AddChild(_mainMenu);
 }
 
 void App::MenuUpdate() {
     int signal = _mainMenu->Update();
+    static auto lastime=Util::Time::GetElapsedTimeMs();
+    if(Util::Time::GetElapsedTimeMs()-lastime>1000) {
+        m_Root.RemoveChild(_mainMenu);
+        lastime=Util::Time::GetElapsedTimeMs();
+        _mainMenu = std::make_shared<MainMenu>();
+        m_Root.AddChild(_mainMenu);
+    }
 
     if( signal == 1) {
         m_Root.RemoveChild(_mainMenu);
