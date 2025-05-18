@@ -25,43 +25,47 @@
 
 class Level: public Util::GameObject {
 public:
-    enum class Music {
-        Haruhikage
-    };
     Level(std::string, const std::string&, const std::string&, const std::string&, std::string );
     ~Level() = default;
 
     void Initial();
     int GetMusicTime();
     int GetStartTime();
-    void Update();
     float Gethp();
+    std::string GetBgPaht();
+    void Update();
     int  Pause();
     int GameOver();
-    void Finish();
+    Finish::ResultData Finish();
     void End();
     void HandleInput();
     void UpdateFruitSpawning();
     void UpdateFruits();
     void ResumeBGM();
     void ClearState();
+
+    bool IsMusicOver();
 private:
     void SetOverButton(bool);
     void SetPauseButton(bool);
+    void UpdateHighestCombo();
     std::string _name;
     std::string _comfigPath;
+    std::string _bgPath;
 
-    LevelData        _levelData;
-    float          _startTimeMs       = 0;
-    float          _runTimeMs         = 0;
-    float          _pauseStartTimeMs  = 0;
-    float          _totalPauseTimeMs  = 0;
-    std::size_t      _nextIndex       = 0;     // 下一顆水果 index
-    int              _approachMs      = 1800;  // 提前量 (可依 AR 動態計算)
-    int              _spawnStartY     = 540; // 螢幕最上方以外
-    float            _scaleX          = 1.f;   // 座標轉換
-    float            _scaleY          = 1.f;
-    bool             _isBgmPlay       = false;
+    LevelData       _levelData;
+    float           _startTimeMs       = 0;
+    float           _runTimeMs         = 0;
+    float           _pauseStartTimeMs  = 0;
+    float           _totalPauseTimeMs  = 0;
+    size_t          _nextIndex         = 0;     // 下一顆水果 index
+    int             _approachMs        = 1800;  // 提前量 (可依 AR 動態計算)
+    int             _spawnStartY       = 540; // 螢幕最上方以外
+    float           _scaleX            = 1.f;   // 座標轉換
+    float           _scaleY            = 1.f;
+    bool            _isBgmPlay         = false;
+    size_t          _catchFruits       = 0;
+    size_t          _highestCombo      = 0;
 
     int music_time=0;
     int start_time;

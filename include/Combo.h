@@ -18,7 +18,6 @@ public:
     void AddCombo(int);
     void ResetCombo();
     void UpdateCombo();
-    void SetVisible(bool visible);
     int GetCombo();
 
 private:

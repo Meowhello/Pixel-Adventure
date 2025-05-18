@@ -49,14 +49,30 @@ void Combo::UpdateCombo() {
     for (int i = 0; i < 3; i++) {
         _comboborad[i]->UpdateImage(_combo[i]);
     }
+
+    if (_comboborad.empty())
+        return;
+
+    int highestIdx = -1;
+    for (int i = static_cast<int>(_comboborad.size()) - 1; i > 0; --i)
+    {
+        if (!_comboborad[i])
+            continue;
+
+        if (i > highestIdx)
+        {
+            if(_combo[i] != 0) {
+                if (highestIdx == -1)
+                    highestIdx = i;
+                _comboborad[i]->SetVisible(true);
+            }
+            else
+                _comboborad[i]->SetVisible(false);
+        }
+    }
+    _comboborad[0]->SetVisible(true);
 }
 
-void Combo::SetVisible(bool visible) {
-    Util::GameObject::SetVisible(visible);
-    for (auto& digit : _comboborad) {
-        digit->SetVisible(visible);
-    }
-}
 
 int Combo::GetCombo() {
     conum=0;
