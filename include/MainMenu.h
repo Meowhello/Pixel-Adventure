@@ -10,13 +10,14 @@
 #include "Button/ExitButton.h"
 #include "Button/PlayButton.h"
 #include "Util/GameObject.hpp"
+#include "Util/Time.hpp"
 
 class MainMenu : public Util::GameObject{
 public:
     MainMenu();
     ~MainMenu() = default;
 
-    void background();
+    std::string background();
     int Update();
 private:
     std::shared_ptr<PlayButton> _playButton = std::make_shared<PlayButton>();
