@@ -3,6 +3,8 @@
 #include <stdlib.h>
 #include <time.h>
 #include <typeinfo>
+
+#include "AudioUtil.h"
 #include "Util/Time.hpp"
 #include "Util/Input.hpp"
 #include "Util/Keycode.hpp"
@@ -39,7 +41,7 @@ void App::MenuUpdate() {
     m_Root.Update();
 }
 
-    void App::SelectLevelUpdate() {
+void App::SelectLevelUpdate() {
     _level = _selectLevel->Updtate();
 
     if(_level) {
@@ -81,11 +83,13 @@ void App::GameUpdate() {
         m_CurrentState = State::GAME_OVER;
     }
 
-    if(_level->IsMusicOver()) {
-        m_CurrentState = State::FINISH;
-        m_Root.RemoveChild(_level);
-        _finish = std::make_shared<Finish>(_level->GetBgPaht());
-        m_Root.AddChild(_finish);
+    if(Util::Time::GetElapsedTimeMs() > _level->GetStartTime()+30) {
+        if(BgmHasFinished()) {
+            m_CurrentState = State::FINISH;
+            m_Root.RemoveChild(_level);
+            _finish = std::make_shared<Finish>(_level->GetBgPaht());
+            m_Root.AddChild(_finish);
+        }
     }
 
     m_Root.Update();

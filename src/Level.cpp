@@ -78,7 +78,7 @@ void Level::Update() {
     std::cout<<"_totalPauseTimeMs:"<<_totalPauseTimeMs<< std::endl;
     if(!_isBgmPlay)
         if(Util::Time::GetElapsedTimeMs() >= _startTimeMs) {
-            _bgm->Play();
+            _bgm->Play(1);
             _isBgmPlay = true;
         }
     HandleInput();
@@ -298,13 +298,6 @@ void Level::ClearState() {
 
     // Stop BGM
     _bgm->Pause();
-}
-
-bool Level::IsMusicOver() {
-    if (_levelData.objects.empty()) return true;
-    auto lastHitTime = _levelData.objects.back().hitTime;
-
-    return _runTimeMs >= (lastHitTime + 3000);
 }
 
 std::string Level::GetBgPaht() {

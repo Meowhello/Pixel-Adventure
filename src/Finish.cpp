@@ -12,7 +12,7 @@ Finish::Finish(std::string path) {
     _scoreboard     = std::make_shared<Scoreboard>(-180, 180);
     _catchFruit     = std::make_shared<ResultInteger>(-360, 20);
     _unCatchFruit   = std::make_shared<ResultInteger>(-110, 20);
-    _combo          = std::make_shared<ResultInteger>(-500, -180);
+    _combo          = std::make_shared<ResultInteger>(-450, -180);
     _accuracy       = std::make_shared<ResultFloat>(-110, -180);
     _endPage        = std::make_shared<EndPage>();
     _retryButton    = std::make_shared<RetryButton>(430, -190);

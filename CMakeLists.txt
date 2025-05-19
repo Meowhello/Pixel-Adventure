@@ -78,6 +78,7 @@ add_executable(${PROJECT_NAME}
         src/ResultInteger.cpp
         include/ResultFloat.h
         src/ResultFloat.cpp
+        include/AudioUtil.h
 )
 
 if(MSVC)

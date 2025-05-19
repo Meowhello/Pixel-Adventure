@@ -29,8 +29,6 @@ public:
     ~Level() = default;
 
     void Initial();
-    int GetMusicTime();
-    int GetStartTime();
     float Gethp();
     std::string GetBgPaht();
     void Update();
@@ -44,7 +42,7 @@ public:
     void ResumeBGM();
     void ClearState();
 
-    bool IsMusicOver();
+    float GetStartTime(){return  _startTimeMs;}
 private:
     void SetOverButton(bool);
     void SetPauseButton(bool);
@@ -66,9 +64,6 @@ private:
     bool            _isBgmPlay         = false;
     size_t          _catchFruits       = 0;
     size_t          _highestCombo      = 0;
-
-    int music_time=0;
-    int start_time;
 
     std::shared_ptr<Util::BGM> _bgm;
     std::shared_ptr<Util::SFX> _sfx;

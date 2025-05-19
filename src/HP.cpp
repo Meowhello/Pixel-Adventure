@@ -5,10 +5,12 @@
 #include "Util/Image.hpp"
 
 HP::HP() {
-    m_Drawable=std::make_shared<Util::Image>(RESOURCE_DIR "/Image/game_sources/blood.png");
-    m_Transform.translation={-300,350};
+    _hpbg = std::make_shared<HPBackground>();
+    AddChild(_hpbg);
+
+    m_Drawable=std::make_shared<Util::Image>(RESOURCE_DIR "/Image/game_sources/scorebar-colour.png");
+    m_Transform.translation={-313,344};
     m_ZIndex=2;
-    // hp=1;
 }
 
 void HP::hpdrain(int level) {
@@ -52,7 +54,7 @@ void HP::hpdrain(int level) {
 void HP::restart() {
     hp=1;
     m_Transform.scale={1,1};
-    m_Transform.translation={-300,350};
+    m_Transform.translation={-313,344};
 }
 
 float HP::Gethp() {
