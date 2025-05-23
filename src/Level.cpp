@@ -13,18 +13,18 @@
 Level::Level(std::string name,
             const std::string& bgmPath, const std::string& sfxPath,
             const std::string& backgroundPath, std::string  comfigPath)
-    : _name(std::move(name)),_comfigPath(std::move(comfigPath)) {
+    : _name(std::move(name)),_comfigPath(std::move(comfigPath)), _bgPath(backgroundPath) {
     _bgm             = std::make_shared<Util::BGM>(bgmPath);
     _sfx             = std::make_shared<Util::SFX>(sfxPath);
     _osuParser       = std::make_shared<OsuParser>();
     _catcher         = std::make_shared<Catcher>();
     _background      = std::make_shared<Background>(backgroundPath);
     _hp              = std::make_shared<HP>();
-    _scoreboard      = std::make_shared<Scoreboard>();
+    _scoreboard      = std::make_shared<Scoreboard>(610, 320);
     _combo           = std::make_shared<Combo>();
     _continueButton  = std::make_shared<ContinueButton>();
-    _retryButton     = std::make_shared<RetryButton>();
-    _backButton      = std::make_shared<BackButton>();
+    _retryButton     = std::make_shared<RetryButton>(0, 0);
+    _backButton      = std::make_shared<BackButton>(0, -125);
 }
 
 void Level::Initial() {
@@ -72,18 +72,22 @@ void Level::Initial() {
 void Level::Update() {
     int64_t now = Util::Time::GetElapsedTimeMs();
     _runTimeMs  = now - _startTimeMs - _totalPauseTimeMs;
+    std::cout<<"_runTimeMs:"<<_runTimeMs<< std::endl;
+    std::cout<<"now:"<<now<< std::endl;
+    std::cout<<"_startTimeMs:"<<_startTimeMs<< std::endl;
+    std::cout<<"_totalPauseTimeMs:"<<_totalPauseTimeMs<< std::endl;
     if(!_isBgmPlay)
         if(Util::Time::GetElapsedTimeMs() >= _startTimeMs) {
-            _bgm->Play();
+            _bgm->Play(1);
             _isBgmPlay = true;
         }
     HandleInput();
     UpdateFruitSpawning();
     UpdateFruits();
-    _scoreboard->UpdateScoreboard();
     _scoreboard->Show();
     _combo->UpdateCombo();
     _combo->Show();
+    UpdateHighestCombo();
 }
 
 
@@ -138,19 +142,6 @@ int Level::GameOver() {
 
     return 0;
 }
-
-void Level::Finish() {
-    // _bgm->Pause();
-    // _combo->SetVisible(false);
-    // _scoreboard->SetVisible(false);
-    // _hp->SetVisible(false);
-    // _catcher->SetVisible(false);
-    // for (auto& fruit : fruits) {
-    //     RemoveChild(fruit);
-    // }
-    // fruits.clear();
-}
-
 
 void Level::HandleInput() {
     if (Util::Input::IsKeyPressed(Util::Keycode::LEFT))
@@ -233,7 +224,7 @@ void Level::UpdateFruits() {
             it = fruits.erase(it);
             _combo->AddCombo(1);
             _sfx->Play();
-            std::cout<<"hitTime: "<<_runTimeMs<<"ms"<< std::endl;
+            _catchFruits++;
             continue;
         }
         std::cout<<"level "<<_levelData.hpDrainRate<<std::endl;
@@ -250,6 +241,19 @@ void Level::UpdateFruits() {
 
         ++it;
     }
+}
+
+void Level::UpdateHighestCombo() {
+    if(_combo -> GetCombo() > _highestCombo) _highestCombo = _combo -> GetCombo();
+}
+
+
+Finish::ResultData Level::Finish() {
+    return {_scoreboard->GetScore(),
+        _catchFruits,
+        _levelData.objects.size() - _catchFruits,
+        _highestCombo,
+        static_cast<float>(_catchFruits) / static_cast<float>(_levelData.objects.size())};
 }
 
 float Level::Gethp() {
@@ -279,6 +283,8 @@ void Level::ClearState() {
     fruits.clear();
 
     // Reset indices and timers
+    _catchFruits = 0;
+    _highestCombo = 0;
     _nextIndex = 0;
     _runTimeMs = 0;
     _pauseStartTimeMs = 0;
@@ -293,3 +299,8 @@ void Level::ClearState() {
     // Stop BGM
     _bgm->Pause();
 }
+
+std::string Level::GetBgPaht() {
+    return _bgPath;
+}
+

@@ -8,8 +8,8 @@
 
 class RetryButton : public Button {
 public:
-    RetryButton()
-    : Button("../Resources/Image/game_sources/pause-retry.png", 0, 0, 100, 380) {
+    RetryButton(int x, int y)
+    : Button("../Resources/Image/game_sources/pause-retry.png", x, y, 100, 380) {
         SetZIndex(5);
     }
     ~RetryButton() = default;

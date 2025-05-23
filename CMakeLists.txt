@@ -74,6 +74,11 @@ add_executable(${PROJECT_NAME}
         src/OsuParser.cpp
         include/Finish.h
         src/Finish.cpp
+        include/ResultInteger.h
+        src/ResultInteger.cpp
+        include/ResultFloat.h
+        src/ResultFloat.cpp
+        include/AudioUtil.h
 )
 
 if(MSVC)

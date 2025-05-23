@@ -3,6 +3,8 @@
 #include <stdlib.h>
 #include <time.h>
 #include <typeinfo>
+
+#include "AudioUtil.h"
 #include "Util/Time.hpp"
 #include "Util/Input.hpp"
 #include "Util/Keycode.hpp"
@@ -12,7 +14,6 @@ void App::Start() {
     LOG_TRACE("Start");
     _mainMenu = std::make_shared<MainMenu>();
     _selectLevel = std::make_shared<SelectLevel>();
-    _finish = std::make_shared<Finish>();
     m_CurrentState = State::MENU;
 
     m_Root.AddChild(_mainMenu);
@@ -79,7 +80,16 @@ void App::GameUpdate() {
     }
 
     if(_level->Gethp()<=0) {
-        m_CurrentState=State::GAME_OVER;
+        m_CurrentState = State::GAME_OVER;
+    }
+
+    if(Util::Time::GetElapsedTimeMs() > _level->GetStartTime()+30) {
+        if(BgmHasFinished()) {
+            m_CurrentState = State::FINISH;
+            m_Root.RemoveChild(_level);
+            _finish = std::make_shared<Finish>(_level->GetBgPaht());
+            m_Root.AddChild(_finish);
+        }
     }
 
     m_Root.Update();
@@ -107,11 +117,27 @@ void App::GameOver() {
 }
 
 void App::GameFinish() {
-    m_Root.AddChild(_finish);
-    _level->Finish();
+    Finish::ResultData result_data = _level->Finish();
+    _finish->SetResult(result_data);
+    int signal = _finish->IsButtonClick();
+
 
     if (Util::Input::IfExit()) {
         m_CurrentState = State::END;
+    }
+
+    if(signal == 1) {
+        m_Root.RemoveChild(_finish);
+        m_Root.RemoveChild(_level);
+        _level->ClearState();
+        m_CurrentState = State::GAME_INITIAL;
+    }
+
+    if(Util::Input::IsKeyDown(Util::Keycode::ESCAPE) ||  signal == 2) {
+        m_Root.RemoveChild(_finish);
+        m_Root.RemoveChild(_level);
+        m_Root.AddChild(_selectLevel);
+        m_CurrentState = State::SELECT_LEVEL;
     }
 
     m_Root.Update();

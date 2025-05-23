@@ -1,0 +1,88 @@
+osu file format v14
+
+[General]
+AudioFilename: audio.mp3
+AudioLeadIn: 0
+PreviewTime: 82147
+Countdown: 0
+SampleSet: Soft
+StackLeniency: 0.5
+Mode: 0
+LetterboxInBreaks: 0
+WidescreenStoryboard: 1
+
+[Editor]
+DistanceSpacing: 1.5
+BeatDivisor: 12
+GridSize: 32
+TimelineZoom: 0.8999999
+
+[Metadata]
+Title:Haruhikage (TV Size)
+TitleUnicode:春日影 (TV Size)
+Artist:CRYCHIC
+ArtistUnicode:CRYCHIC
+Creator:lkx_Shore
+Version:Normal
+Source:BanG Dream! It's MyGO!!!!!
+Tags:高松燈 羊宮妃那 長崎そよ 小日向美香 椎名立希 林鼓子 豊川祥子 高尾奏音  若葉睦 渡瀬結月  バンドリ！ 株式会社s 響hibiki 青二プロダクション japanese j-pop jpop anime bang dream! takamatsu tomori aoki nagasaki soyo kohinata mika shiina taki hayashi koko togawa sakiko wakaba mutsumi bushiroad Oda Asuka Fujita Junpei Spring Sunlight female vocals Gust Ultimate Madoka pop 藤田淳平 Elements Garden
+BeatmapID:4420184
+BeatmapSetID:2070468
+
+[Difficulty]
+HPDrainRate:3
+CircleSize:3
+OverallDifficulty:3
+ApproachRate:4
+SliderMultiplier:1.70000000596046
+SliderTickRate:1
+
+[Events]
+//Background and Video events
+Video,0,"why.mp4"
+0,0,"1.png",0,0
+//Break Periods
+//Storyboard Layer 0 (Background)
+//Storyboard Layer 1 (Fail)
+//Storyboard Layer 2 (Pass)
+//Storyboard Layer 3 (Foreground)
+//Storyboard Layer 4 (Overlay)
+//Storyboard Sound Samples
+
+[TimingPoints]
+500,927.83026891614,4,2,1,30,1,0
+500,-100,4,2,1,30,0,0
+6994,-100,4,2,1,30,0,0
+7922,-100,4,2,1,40,0,0
+15345,-100,4,2,1,30,0,0
+37613,-100,4,2,1,50,0,0
+59881,-100,4,2,1,40,0,0
+72870,-100,4,2,1,50,0,0
+74144,857.142857142857,4,2,1,50,1,0
+74725,927.83026891614,4,2,1,50,1,0
+82147,-100,4,2,1,60,0,1
+108120,927.83026891614,4,2,1,60,1,1
+109988,857.142857142857,4,2,1,60,1,1
+110273,967.741935483871,4,2,1,60,1,1
+110885,946.372239747634,4,2,1,60,1,1
+111831,-100,4,2,1,50,0,0
+112777,-100,4,2,1,40,0,0
+113724,-100,4,2,1,30,0,0
+114670,-100,4,2,1,20,0,0
+115143,-100,4,2,1,10,0,0
+115616,-100,4,2,1,5,0,0
+
+
+[Colours]
+Combo1 : 235,234,173
+Combo2 : 192,197,239
+Combo3 : 180,227,241
+Combo4 : 234,207,189
+Combo5 : 230,187,223
+
+[HitObjects]
+39,55,500,6,0,P|68:42|150:59,1,113.333333730697,2|0,0:0|0:0,0:0:0:0:
+187,129,1427,2,0,L|309:107,1,113.333333730697,2|0,0:0|0:0,0:0:0:0:
+382,93,2355,6,0,P|411:92|472:130,1,85.000000298023,4|2,0:0|0:0,0:0:0:0:
+461,158,2974,2,0,L|456:218,1,56.6666668653487,2|0,0:0|0:0,0:0:0:0:
+398,276,3592,6,0,L|393:344,1,56.6666668653487,2|2,0:0|0:0,0:0:0:0:
