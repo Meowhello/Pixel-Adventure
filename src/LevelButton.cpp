@@ -27,7 +27,6 @@ void LevelButton::Translate(float deltaY)
     else if (deltaY < 0.f) {                 // MoveDown
         pos.x += (oldY <= 0.f ?  deltaX : -deltaX);
     }
-    // deltaY==0 不動
 
     setPosition(pos);
 }

@@ -12,6 +12,8 @@ class Background : public Util::GameObject {
 public:
     Background(std::string);
     ~Background() = default;
+
+    void Change(std::string);
 };
 
 #endif //BACKGROUND_H
