@@ -32,23 +32,54 @@ SelectLevel::SelectLevel() {
     }
 }
 
-std::shared_ptr<Level> SelectLevel::Updtate() {
-    for(int i = 0; i < _buttons.size(); i++) {
-        if(Util::Input::IfScroll()) {
-            float scrollY = Util::Input::GetScrollDistance().y;
-            if (scrollY > 0) {
-                _buttons[i]->MoveDown();
-            } else if (scrollY < 0) {
-                _buttons[i]->MoveUp();
+std::shared_ptr<Level> SelectLevel::Update()
+{
+    float dt = 0.05;
+    if (Util::Input::IfScroll())
+    {
+        float scrollY = Util::Input::GetScrollDistance().y;
+        for (auto &btn : _buttons)
+            scrollY > 0 ? btn->MoveDown() : btn->MoveUp();
+    }
+
+    glm::vec2 mousePos = Util::Input::GetCursorPosition();
+    if (Util::Input::IsKeyPressed(Util::Keycode::MOUSE_LB))
+    {
+        for (int i = 0; i < _buttons.size(); ++i)
+        {
+            if (_buttons[i]->IsButtonClick(mousePos))
+            {
+                _background->Change(_configs[i].bgPath);
+                _targetIdx   = i;
+                float centerY = 0.f;
+                _remainDelta = centerY - _buttons[i]->getPosition().y;
+                break;
             }
         }
+    }
 
-        glm::vec2 mouseposition = Util::Input::GetCursorPosition();
-        if(_buttons[i]->IsButtonClick(mouseposition)) {
-            auto &cfg = _configs[i];
-            return std::make_shared<Level>(
-                cfg.name, cfg.bgmPath, cfg.sfxPath,
-                cfg.bgPath, cfg.osuPath);
+    if (std::abs(_remainDelta) > 0.5f)
+    {
+        float step = glm::sign(_remainDelta) * SCROLL_SPEED * dt;
+
+        if (std::abs(step) > std::abs(_remainDelta))
+            step = _remainDelta;
+
+        for (auto &btn : _buttons)
+            btn->Translate(step);
+
+        _remainDelta -= step;
+    }
+    else
+    {
+        _remainDelta = 0.f;
+        if (_targetIdx != -1 &&
+            _buttons[_targetIdx]->IsButtonClick(mousePos))
+        {
+            auto &cfg = _configs[_targetIdx];
+            return std::make_shared<Level>(cfg.name,
+                                            cfg.bgmPath, cfg.sfxPath,
+                                            cfg.bgPath, cfg.osuPath);
         }
     }
 

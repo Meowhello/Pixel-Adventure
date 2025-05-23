@@ -18,6 +18,8 @@ public:
     void setPosition(const glm::vec2&);
     void setSize(const glm::vec2&);
     bool IsButtonClick(glm::vec2 positon);
+    bool IsOnButton(glm::vec2 position);
+
 
 protected:
     std::shared_ptr<Util::Image> _buttonImage;

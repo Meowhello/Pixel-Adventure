@@ -35,6 +35,8 @@ public:
 private:
     void ValidTask();
 
+    bool isMenuBGChange = false;
+
     State m_CurrentState = State::START;
     Util::Renderer m_Root;
     std::shared_ptr<Level> _level;

@@ -20,19 +20,18 @@ void App::Start() {
 }
 
 void App::MenuUpdate() {
+    if(!isMenuBGChange) {
+        _mainMenu->ChangeBG();
+        isMenuBGChange = true;
+    }
+
     int signal = _mainMenu->Update();
-    // static auto lastime=Util::Time::GetElapsedTimeMs();
-    // if(Util::Time::GetElapsedTimeMs()-lastime>1000) {
-        // m_Root.RemoveChild(_mainMenu);
-        // lastime=Util::Time::GetElapsedTimeMs();
-        // _mainMenu = std::make_shared<MainMenu>();
-        // m_Root.AddChild(_mainMenu);
-    // }
 
     if( signal == 1) {
         m_Root.RemoveChild(_mainMenu);
         m_Root.AddChild(_selectLevel);
         m_CurrentState = State::SELECT_LEVEL;
+        isMenuBGChange = false;
     }
 
     if (Util::Input::IfExit() || signal == 2) {
@@ -42,7 +41,7 @@ void App::MenuUpdate() {
 }
 
 void App::SelectLevelUpdate() {
-    _level = _selectLevel->Updtate();
+    _level = _selectLevel->Update();
 
     if(_level) {
         m_Root.RemoveChild(_selectLevel);

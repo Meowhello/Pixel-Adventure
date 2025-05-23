@@ -11,28 +11,25 @@ LevelButton::LevelButton(std::string imagePath, int x, int y)
     SetZIndex(0);
 }
 
-void LevelButton::MoveUp() {
-    auto pos = getPosition();
-    int oldY = pos.y;
+void LevelButton::Translate(float deltaY)
+{
+    glm::vec2 pos  = getPosition();
+    float      oldY = pos.y;
 
-    pos.y += 25;
-    if (oldY < 0) {
-        pos.x -= 2.5;
-    } else {
-        pos.x += 2.5;
+    pos.y += deltaY;
+
+    constexpr float kSlope = 0.1f;
+    float deltaX = std::abs(deltaY) * kSlope;
+
+    if (deltaY > 0.f) {
+        pos.x += (oldY < 0.f ? -deltaX :  deltaX);
     }
+    else if (deltaY < 0.f) {                 // MoveDown
+        pos.x += (oldY <= 0.f ?  deltaX : -deltaX);
+    }
+
     setPosition(pos);
 }
 
-void LevelButton::MoveDown() {
-    auto pos = getPosition();
-
-    int oldY = pos.y;
-    pos.y -= 25;
-    if (oldY <= 0) {
-        pos.x += 2.5;
-    } else {
-        pos.x -= 2.5;
-    }
-    setPosition(pos);
-}
+void LevelButton::MoveUp()   { Translate(+25.f); }
+void LevelButton::MoveDown() { Translate(-25.f); }

@@ -40,4 +40,13 @@ bool Button::IsButtonClick(glm::vec2 position) {
            position.y < pos.y + size.y / 2;
 }
 
+bool Button::IsOnButton(glm::vec2 position) {
+    auto pos = m_Transform.translation;
+    auto size = _size;
+    return position.x > pos.x - size.x / 2 &&
+           position.x < pos.x + size.x / 2 &&
+           position.y > pos.y - size.y / 2 &&
+           position.y < pos.y + size.y / 2;
+}
+
 

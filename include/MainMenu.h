@@ -19,6 +19,7 @@ public:
 
     std::string background();
     int Update();
+    void ChangeBG();
 private:
     std::shared_ptr<PlayButton> _playButton = std::make_shared<PlayButton>();
     std::shared_ptr<ExitButton> _exitButton = std::make_shared<ExitButton>();

@@ -7,7 +7,6 @@
 
 MainMenu::MainMenu() {
     _background = std::make_shared<Background>(background());
-    m_Transform.scale={0.8,0.8};
     AddChild(_background);
     AddChild(_playButton);
     AddChild(_exitButton);
@@ -103,3 +102,8 @@ std::string MainMenu::background() {
     // std::string bg=RESOURCE_DIR "/Songs/"+backgroundpic+"/BG.jpg";
 
 }
+
+void MainMenu::ChangeBG() {
+    _background->Change(background());
+}
+
