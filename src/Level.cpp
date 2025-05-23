@@ -58,6 +58,8 @@ void Level::Initial() {
 
     _background->m_Transform.scale = {0.6666667, 0.6666667};
 
+    _sfx->SetVolume(64);
+
     AddChild(_catcher);
     AddChild(_background);
     AddChild(_hp);

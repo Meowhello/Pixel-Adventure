@@ -42,7 +42,7 @@ void App::MenuUpdate() {
 }
 
 void App::SelectLevelUpdate() {
-    _level = _selectLevel->Updtate();
+    _level = _selectLevel->Update();
 
     if(_level) {
         m_Root.RemoveChild(_selectLevel);

@@ -32,23 +32,100 @@ SelectLevel::SelectLevel() {
     }
 }
 
-std::shared_ptr<Level> SelectLevel::Updtate() {
-    for(int i = 0; i < _buttons.size(); i++) {
-        if(Util::Input::IfScroll()) {
-            float scrollY = Util::Input::GetScrollDistance().y;
-            if (scrollY > 0) {
-                _buttons[i]->MoveDown();
-            } else if (scrollY < 0) {
-                _buttons[i]->MoveUp();
+// std::shared_ptr<Level> SelectLevel::Uptate() {
+//     for(int i = 0; i < _buttons.size(); i++) {
+//         if(Util::Input::IfScroll()) {
+//             float scrollY = Util::Input::GetScrollDistance().y;
+//             if (scrollY > 0) {
+//                 _buttons[i]->MoveDown();
+//             } else if (scrollY < 0) {
+//                 _buttons[i]->MoveUp();
+//             }
+//         }
+//
+//         glm::vec2 mouseposition = Util::Input::GetCursorPosition();
+//         glm::vec2 initialPos(400.f, 0.f);
+//         glm::vec2 buttonPos = _buttons[i]->getPosition();
+//         if(_buttons[i]->IsButtonClick(mouseposition)) {
+//             if(buttonPos != initialPos) {
+//                 while(buttonPos != initialPos) {
+//                     for(int j = 0; j < _buttons.size(); j++) {
+//                         if (buttonPos.y > initialPos.y) {
+//                             _buttons[j]->MoveDown();
+//                         } else if (buttonPos.y < initialPos.y) {
+//                             _buttons[j]->MoveUp();
+//                         }
+//                     }
+//                     buttonPos = _buttons[i]->getPosition();
+//                 }
+//             }else {
+//                 auto &cfg = _configs[i];
+//                 return std::make_shared<Level>(
+//                     cfg.name, cfg.bgmPath, cfg.sfxPath,
+//                     cfg.bgPath, cfg.osuPath);
+//             }
+//         }
+//
+//         if(_buttons[i]->IsOnButton(mouseposition)) {
+//
+//         }
+//     }
+//
+//     return nullptr;
+// }
+
+
+// 讓外部主迴圈把 dt（本幀經過時間，秒）傳進來
+std::shared_ptr<Level> SelectLevel::Update()
+{
+    float dt = 0.05;
+    // ── (A) 處理滑鼠滾輪 ──────────────────────────────
+    if (Util::Input::IfScroll())
+    {
+        float scrollY = Util::Input::GetScrollDistance().y;
+        for (auto &btn : _buttons)
+            scrollY > 0 ? btn->MoveDown() : btn->MoveUp();
+    }
+
+    // ── (B) 處理點擊，決定要把哪顆按鈕捲到中央 ────────
+    glm::vec2 mousePos = Util::Input::GetCursorPosition();
+    if (Util::Input::IsKeyPressed(Util::Keycode::MOUSE_LB))
+    {
+        for (int i = 0; i < _buttons.size(); ++i)
+        {
+            if (_buttons[i]->IsButtonClick(mousePos))
+            {
+                _targetIdx   = i;
+                float centerY = 0.f;                       // 你的「中央高度」
+                _remainDelta = centerY - _buttons[i]->getPosition().y;
+                break;
             }
         }
+    }
 
-        glm::vec2 mouseposition = Util::Input::GetCursorPosition();
-        if(_buttons[i]->IsButtonClick(mouseposition)) {
-            auto &cfg = _configs[i];
-            return std::make_shared<Level>(
-                cfg.name, cfg.bgmPath, cfg.sfxPath,
-                cfg.bgPath, cfg.osuPath);
+    // ── (C) 如果有目標尚未到中央，逐幀平滑移動 ─────────
+    if (std::abs(_remainDelta) > 0.5f)                   // ε 避免抖動
+    {
+        float step = glm::sign(_remainDelta) * SCROLL_SPEED * dt;
+
+        if (std::abs(step) > std::abs(_remainDelta))      // 最後一步不要超過
+            step = _remainDelta;
+
+        for (auto &btn : _buttons)
+            btn->Translate(step);         // 或 MoveUp/Down
+
+        _remainDelta -= step;                             // 更新剩餘距離
+    }
+    else
+    {
+        _remainDelta = 0.f;                               // 補正
+        if (_targetIdx != -1 &&
+            _buttons[_targetIdx]->IsButtonClick(mousePos))// 再按一次就進關卡
+        {
+            auto &cfg = _configs[_targetIdx];
+            return std::make_shared<Level>(cfg.name,
+                                            cfg.bgmPath, cfg.sfxPath,
+                                            cfg.bgPath, cfg.osuPath);
         }
     }
 

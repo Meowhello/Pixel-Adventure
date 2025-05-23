@@ -15,6 +15,9 @@ public:
 
     void MoveUp();
     void MoveDown();
+
+    void Translate(float delta);
 };
 
 #endif //LEVELBUTTON_H
+
