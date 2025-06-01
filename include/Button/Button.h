@@ -22,7 +22,6 @@ public:
 
 
 protected:
-    std::shared_ptr<Util::Image> _buttonImage;
     glm::vec2 _size;
 };
 

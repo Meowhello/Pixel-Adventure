@@ -34,7 +34,7 @@ int MainMenu::Update() {
 std::string MainMenu::background() {
     std::string backgroundpic= "";
 
-    auto randpic=rand()%(20); //max-min+1-min
+    auto randpic=rand()%(37); //max-min+1-min
     switch (randpic) {
         case 0:
             backgroundpic= "../Resources/Songs/682290 Hige Driver - Miracle Sugite Yabai (feat shully)/BG.jpg";
@@ -96,6 +96,59 @@ std::string MainMenu::background() {
         case 19:
             backgroundpic="../Resources/Songs/2070468 CRYCHIC - Haruhikage (TV Size)/2.png";
         break;
+        case 20:
+            backgroundpic="../Resources/Songs/2259244 Ave Mujica - Symbol III _ Water/BG.jpg";
+        break;
+        case 21:
+            backgroundpic="../Resources/Songs/2298154 Ave Mujica - KiLLKiSS (TV Size)/BG.jpg";
+        break;
+        case 22:
+            backgroundpic="../Resources/Songs/2287975 Ave Mujica - Black Birthday/BG.jpg";
+        break;
+        case 23:
+            backgroundpic="../Resources/Songs/2178995 TOGENASHI TOGEARI - Wrong World (TV Size)/BG.jpg";
+        break;
+        case 24:
+            backgroundpic="../Resources/Songs/2172979 TOGENASHI TOGEARI - VOID (TV Size)/BG.jpg";
+        break;
+        case 25:
+            backgroundpic="../Resources/Songs/2175464 Shin-Kawasaki (Kari) - Voiceless Fish (TV Size)/BG.jpg";
+        break;
+        case 26:
+            backgroundpic="../Resources/Songs/2377570 TOGENASHI TOGEARI - I'm Nobody (TV Size)/BG.jpg";
+        break;
+        case 27:
+            backgroundpic="../Resources/Songs/1863866 kessoku band - Seishun Complex/BG.jpg";
+        break;
+        case 28:
+            backgroundpic="../Resources/Songs/1880007 kessoku band - Guitar to Kodoku to Aoi Hoshi/BG.jpg";
+        break;
+        case 29:
+            backgroundpic="../Resources/Songs/1909824 kessoku band - Seiza ni Naretara/BG.jpg";
+        break;
+        case 30:
+            backgroundpic="../Resources/Songs/2197908 TOGENASHI TOGEARI - Emptiness and Catharsis/BG.jpg";
+        break;
+        case 31:
+            backgroundpic="../Resources/Songs/2064958 MyGO!!!!! - Mayoiuta/BG.jpg";
+        break;
+        case 32:
+            backgroundpic="../Resources/Songs/2084617 MyGO!!!!! - Utakotoba/BG.jpg";
+        break;
+        case 33:
+            backgroundpic="../Resources/Songs/2066973 MyGO!!!!! - Silhouette Dance/BG.jpg";
+        break;
+        case 34:
+            backgroundpic="../Resources/Songs/1905695 kessoku band - Ano Band (TV Size)/BG.jpg";
+        break;
+        case 35:
+            backgroundpic="../Resources/Songs/1909993 kessoku band - Wasurete Yaranai/BG1.jpg";
+        break;
+        case 36:
+            backgroundpic="../Resources/Songs/1909993 kessoku band - Wasurete Yaranai/BG2.jpg";
+        break;
+
+
     }
         return backgroundpic;
     // m_Drawable = std::make_shared<Util::Image>(RESOURCE_DIR "/Songs/"+backgroundpic+"/BG.jpg");

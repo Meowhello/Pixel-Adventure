@@ -6,8 +6,7 @@
 #include "Util/Input.hpp"
 
 Button::Button(std::string filepath, int x, int y, int height, int width) {
-    _buttonImage = std::make_shared<Util::Image>(filepath);
-    m_Drawable = _buttonImage;
+    m_Drawable = std::make_shared<Util::Image>(filepath);
     m_Transform.translation = {x, y};
     _size = {width, height};
 }
