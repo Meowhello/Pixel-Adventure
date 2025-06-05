@@ -23,6 +23,7 @@ public:
 
 protected:
     glm::vec2 _size;
+    std::string whiteBtnPath;
 };
 
 

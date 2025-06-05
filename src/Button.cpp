@@ -7,6 +7,13 @@
 
 Button::Button(std::string filepath, int x, int y, int height, int width) {
     m_Drawable = std::make_shared<Util::Image>(filepath);
+    const std::string old_tail = "btn_blue.png";
+    const std::string new_tail = "btn_white.png";
+    auto pos = filepath.rfind(old_tail);
+    if (pos != std::string::npos && pos + old_tail.size() == filepath.size()) {
+        filepath.replace(pos, old_tail.size(), new_tail);
+    }
+    whiteBtnPath = filepath;
     m_Transform.translation = {x, y};
     _size = {width, height};
 }

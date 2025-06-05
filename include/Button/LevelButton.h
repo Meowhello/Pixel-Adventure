@@ -15,8 +15,15 @@ public:
 
     void MoveUp();
     void MoveDown();
+    void ChangeBlueBtn();
+    void ChangeWhiteBtn();
+    bool getIsCenter();
 
     void Translate(float delta);
+private:
+    std::shared_ptr<Core::Drawable> blueBtn = m_Drawable;
+    std::shared_ptr<Core::Drawable> whiteBtn = std::make_shared<Util::Image>(whiteBtnPath);;
+    bool isCenter = false;
 };
 
 #endif //LEVELBUTTON_H
