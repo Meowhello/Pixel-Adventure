@@ -15,9 +15,8 @@ public:
 
     void MoveUp();
     void MoveDown();
-    void ChangeBlueBtn();
-    void ChangeWhiteBtn();
-    bool getIsCenter();
+    void CheckButtn();
+    bool getIsBtnWhite();
 
     void Translate(float delta);
 private:
