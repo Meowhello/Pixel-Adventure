@@ -47,6 +47,7 @@ void App::SelectLevelUpdate() {
     _level = _selectLevel->Update();
 
     if(_level) {
+        _bgm->Pause();
         m_Root.RemoveChild(_selectLevel);
         m_CurrentState = State::GAME_INITIAL;
     }
@@ -103,7 +104,6 @@ void App::GameOver() {
     if( signal == 1) {
         m_Root.RemoveChild(_level);
         _level->ClearState();
-        _bgm = std::make_shared<Util::BGM>("../Resources/music/videoplayback.mp3");
         _bgm->Play();
         m_CurrentState = State::GAME_INITIAL;
     }
@@ -111,7 +111,6 @@ void App::GameOver() {
     if(Util::Input::IsKeyDown(Util::Keycode::ESCAPE) || signal == 2) {
         m_Root.RemoveChild(_level);
         m_Root.AddChild(_selectLevel);
-        _bgm = std::make_shared<Util::BGM>("../Resources/music/videoplayback.mp3");
         _bgm->Play();
         m_CurrentState = State::SELECT_LEVEL;
     }
@@ -143,7 +142,6 @@ void App::GameFinish() {
         m_Root.RemoveChild(_finish);
         m_Root.RemoveChild(_level);
         m_Root.AddChild(_selectLevel);
-        _bgm = std::make_shared<Util::BGM>("../Resources/music/videoplayback.mp3");
         _bgm->Play();
         m_CurrentState = State::SELECT_LEVEL;
     }
@@ -168,7 +166,6 @@ void App::Pasue() {
     if(signal == 3) {
         m_Root.RemoveChild(_level);
         m_Root.AddChild(_selectLevel);
-        _bgm = std::make_shared<Util::BGM>("../Resources/music/videoplayback.mp3");
         _bgm->Play();
         m_CurrentState = State::SELECT_LEVEL;
     }
