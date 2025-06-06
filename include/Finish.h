@@ -4,6 +4,7 @@
 
 #ifndef FINISH_H
 #define FINISH_H
+#include "HP.h"
 #include "Util/GameObject.hpp"
 #include "ResultFloat.h"
 #include "ResultInteger.h"
@@ -16,6 +17,7 @@ public:
     ~Ranking() = default;
 
     void SetRanking(float accuracy) {
+
         if (accuracy >= 0.9f) {
             m_Drawable = std::make_shared<Util::Image>(
                 (RESOURCE_DIR "/Image/game_sources/ranking-S.png"));
