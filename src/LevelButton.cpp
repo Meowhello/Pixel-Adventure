@@ -31,17 +31,19 @@ void LevelButton::Translate(float deltaY)
     setPosition(pos);
 }
 
-void LevelButton::ChangeBlueBtn() {
-    m_Drawable = blueBtn;
-    isBtnWhite = false;
+void LevelButton::CheckButtn() {
+    if(m_Transform.translation.y == 0.0) {
+        m_Drawable = whiteBtn;
+        isBtnWhite = true;
+    }
+    else {
+        m_Drawable = blueBtn;
+        isBtnWhite = false;
+    }
 }
 
-void LevelButton::ChangeWhiteBtn() {
-    m_Drawable = whiteBtn;
-    isBtnWhite = true;
-}
 
-bool LevelButton::getIsCenter() {
+bool LevelButton::getIsBtnWhite() {
     return isBtnWhite;
 }
 

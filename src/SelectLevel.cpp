@@ -85,13 +85,9 @@ std::shared_ptr<Level> SelectLevel::Update()
     {
         for (int i = 0; i < _buttons.size(); ++i)
         {
+            _buttons[i]->CheckButtn();
             if (_buttons[i]->IsButtonClick(mousePos))
             {
-                for (int j = 0; j < _buttons.size(); ++j) {
-                    if(_buttons[i] !=  _buttons[j])
-                        _buttons[j]->ChangeBlueBtn();
-                }
-                _buttons[i]->ChangeWhiteBtn();
                 _background->Change(_configs[i].bgPath);
                 _targetIdx   = i;
                 float centerY = 0.f;
