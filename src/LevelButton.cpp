@@ -33,16 +33,16 @@ void LevelButton::Translate(float deltaY)
 
 void LevelButton::ChangeBlueBtn() {
     m_Drawable = blueBtn;
-    isCenter = false;
+    isBtnWhite = false;
 }
 
 void LevelButton::ChangeWhiteBtn() {
     m_Drawable = whiteBtn;
-    isCenter = true;
+    isBtnWhite = true;
 }
 
 bool LevelButton::getIsCenter() {
-    return isCenter;
+    return isBtnWhite;
 }
 
 void LevelButton::MoveUp()   { Translate(+25.f); }

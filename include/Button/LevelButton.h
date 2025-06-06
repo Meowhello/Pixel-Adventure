@@ -23,7 +23,7 @@ public:
 private:
     std::shared_ptr<Core::Drawable> blueBtn = m_Drawable;
     std::shared_ptr<Core::Drawable> whiteBtn = std::make_shared<Util::Image>(whiteBtnPath);;
-    bool isCenter = false;
+    bool isBtnWhite = false;
 };
 
 #endif //LEVELBUTTON_H

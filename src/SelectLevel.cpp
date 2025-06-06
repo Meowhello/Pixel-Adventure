@@ -56,12 +56,28 @@ SelectLevel::SelectLevel() {
 
 std::shared_ptr<Level> SelectLevel::Update()
 {
-    float dt = 0.05;
+    constexpr float CENTER_Y = 0.0f;
+
+    float dt = 0.05f;
+
     if (Util::Input::IfScroll())
     {
         float scrollY = Util::Input::GetScrollDistance().y;
-        for (auto &btn : _buttons)
-            scrollY > 0 ? btn->MoveDown() : btn->MoveUp();
+
+        float firstY = _buttons.front()->getPosition().y;
+        float lastY  = _buttons.back()->getPosition().y;
+
+        bool blockDown = (firstY <= CENTER_Y);
+        bool blockUp   = (lastY  >= CENTER_Y);
+
+        bool allowMove = (scrollY > 0 && !blockDown) ||
+                         (scrollY < 0 && !blockUp);
+
+        if (allowMove)
+        {
+            for (auto &btn : _buttons)
+                (scrollY > 0) ? btn->MoveDown() : btn->MoveUp();
+        }
     }
 
     glm::vec2 mousePos = Util::Input::GetCursorPosition();
