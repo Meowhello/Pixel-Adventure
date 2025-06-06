@@ -150,7 +150,8 @@ std::string MainMenu::background() {
 
 
     }
-        return backgroundpic;
+    m_Transform.scale = {0.8, 0.8};
+    return backgroundpic;
     // m_Drawable = std::make_shared<Util::Image>(RESOURCE_DIR "/Songs/"+backgroundpic+"/BG.jpg");
     // std::string bg=RESOURCE_DIR "/Songs/"+backgroundpic+"/BG.jpg";
 
