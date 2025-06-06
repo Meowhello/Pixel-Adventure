@@ -220,7 +220,7 @@ void Level::UpdateFruits() {
                       std::abs(pos.y + 130.f)      < 30.f;
 
         if (caught) {
-            _scoreboard->AddScore(100);
+            _scoreboard->AddScore(100 * ( 1 + _combo->GetCombo() / 25.0));
             fruit->SetVisible(false);
             RemoveChild(fruit);
             it = fruits.erase(it);
