@@ -16,6 +16,9 @@ void App::Start() {
     _selectLevel = std::make_shared<SelectLevel>();
     m_CurrentState = State::MENU;
 
+    _bgm = std::make_shared<Util::BGM>("../Resources/music/videoplayback.mp3");
+    _bgm->Play();
+
     m_Root.AddChild(_mainMenu);
 }
 

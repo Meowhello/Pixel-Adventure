@@ -45,6 +45,8 @@ private:
     std::shared_ptr<MainMenu> _mainMenu;
     std::shared_ptr<SelectLevel> _selectLevel;
     std::shared_ptr<Finish> _finish;
+
+    std::shared_ptr<Util::BGM> _bgm;
 };
 
 #endif
