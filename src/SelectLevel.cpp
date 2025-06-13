@@ -113,7 +113,7 @@ std::shared_ptr<Level> SelectLevel::Update()
     {
         _remainDelta = 0.f;
         if (_targetIdx != -1 &&
-            _buttons[_targetIdx]->IsButtonClick(mousePos))
+            _buttons[_targetIdx]->IsButtonClick(mousePos) && _buttons[_targetIdx]->IsBtnWhite())
         {
             auto &cfg = _configs[_targetIdx];
             return std::make_shared<Level>(cfg.name,

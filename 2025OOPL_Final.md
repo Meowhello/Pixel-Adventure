@@ -31,8 +31,19 @@
 ## 程式設計
 
 ### 程式架構
+狀態機 (State Machine)：App 以 enum class State { MENU, SELECT_LEVEL, GAME_UPDATE, END } 控制流程。
+場景樹 (Scene Graph)：所有遊戲物件皆繼承 Util::GameObject，透過 m_Root 建立樹狀結構統一更新與渲染。
+資源管理：使用 std::shared_ptr 與 RAII 管理 Image/BGM/SFX，避免記憶體外漏並支援熱重載。
+輸入系統：Util::Input 封裝 GLFW 輸入，支援鍵盤、滑鼠游標與滾輪事件。
+UI 元件：Button 類別封裝繪製、點擊判定與滾動邏輯，可動態生成關卡清單。
+除錯模式 (Debug Mode)：按 F3 切換，顯示 FPS、Hitbox 與物件數量，有助於最佳化效能。
 
 ### 程式技術
+語言／編譯：C++17 + CMake，IDE：JetBrains CLion 2025.1。
+圖形：OpenGL 4.6、GLFW、GLAD、stb_image、GLM。
+音訊：SFML Audio，支援 BGM 與 SFX 並行播放。
+除錯：ImGui (內部工具)、Valgrind／Dr.Memory (偵測 Memory Leak)。
+CI/CD：GitHub Actions 自動建構 Windows 可執行檔與 Release Artifact。
 
 ## 結語
 
@@ -55,6 +66,11 @@ sol.
 sol. 
 . 選單在滑動過程中超出界線找不回來
 sol. 
+
+關卡選單無邊界滾動：在 SelectLevel::Update() 依中央按鈕索引限制滾動方向
+水果卡在空中不下落：調整 UpdateFruits() 流程，只有在 fruits 為空時才生成新水果，並檢查碰撞邏輯
+記憶體外漏：統一以 shared_ptr/weak_ptr 管理物件，並確保 RemoveChild() 時釋放資源
+浮點誤差導致角色邊緣抖動：在 Physics::Resolve() 加入 epsilon = 0.01f 並強制 Y 軸對齊平台表面
 
 
 ### 自評

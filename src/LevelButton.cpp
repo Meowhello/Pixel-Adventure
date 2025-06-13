@@ -43,7 +43,7 @@ void LevelButton::CheckButtn() {
 }
 
 
-bool LevelButton::getIsBtnWhite() {
+bool LevelButton::IsBtnWhite() {
     return isBtnWhite;
 }
 
